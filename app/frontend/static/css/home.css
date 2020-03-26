@@ -1,0 +1,55 @@
+html,body{
+    height:100%;
+    margin:0;
+}
+
+.wrapper{
+    height:100%;
+    width:100%;
+}
+
+#sidebar_collapse {
+    height:100%;
+}
+
+nav {
+    height:100%;
+}
+
+#sidebar{
+    background-color:aliceblue;
+}
+
+.pl5 {
+    padding-left: 5px;
+}
+
+.sidebar-width{
+    min-width: 170px;
+    max-width: 170px;
+}
+
+#hamburger-menu{
+    cursor: point;
+}
+
+.fa-plus-circle{
+    color:orange;
+}
+
+#main_container {
+    width:95%;
+    margin:auto;
+}
+
+#main_container header{
+    text-align: center;
+}
+
+#category_section .nav-tabs{
+    background-color: aliceblue;
+}
+
+#time-inputgroup p{
+    height: 70%;
+}
