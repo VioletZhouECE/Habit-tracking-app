@@ -4,7 +4,7 @@ app = express();
 
 app.set('view-engine', 'ejs');
 
-app.get('/', (res, res)=> {
+app.get('/', (req, res)=> {
     res.render('../frontend/template/home.js')
 });
 
