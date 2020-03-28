@@ -48,7 +48,6 @@ class CategorySection extends React.Component{
         this.handleSelectedIcon = this.handleSelectedIcon.bind(this);
         this.handleSelectTime = this.handleSelectTime.bind(this);
         this.handleSelectUnit = this.handleSelectUnit.bind(this);
-        this.handleClickTextarea = this.handleClickTextarea.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateTime = this.validateTime.bind(this);
     }
@@ -127,10 +126,6 @@ class CategorySection extends React.Component{
         })
     }
 
-    handleClickTextarea(){
-        this.setState({should_validate_empty : true}, () => {this.validateTime()});
-    }
-
     //validate time section
     validateTime(callback=null){
         //we only need to validate empty data after the "create an entry" button is clicked
@@ -206,7 +201,7 @@ class CategorySection extends React.Component{
                     <Time icon_selected = {this.state.icon_selected} value = {this.state.time} onSelectTime = {this.handleSelectTime} onSelectUnit = {this.handleSelectUnit} unit = {this.state.unit}></Time>
                     </div>
                     <p> Write something done to celebrate what you have achieved: </p>
-                    <textarea id = "emoji-area" onChange = {this.handleClicktextarea}></textarea>
+                    <textarea id = "emoji-area"></textarea>
                     <button className="btn-primary" onClick = {this.handleSubmit}>Create task entry</button>
                 </div>
                 )
