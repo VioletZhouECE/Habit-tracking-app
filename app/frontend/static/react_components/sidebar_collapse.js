@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 function sidebarCollapse() {
     return (
-        <nav id="sidebar" className = "pl-3 pt-2" style = {{maxWidth:"60px", minWidth:"60px", height:"100%"}}>
+        <nav id="sidebar" className = "pl-3 pt-2" style = {{maxWidth:"60px", minWidth:"60px"}}>
             <div className="sidebar-header">
                 <h3>VZ</h3>
             </div>
