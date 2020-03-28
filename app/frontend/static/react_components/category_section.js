@@ -62,7 +62,6 @@ class CategorySection extends React.Component{
     }
 
     handleClickTab(eventTextContent){
-        console.log(eventTextContent);
         switch(eventTextContent){
             case "Most frequently used":
             this.setState({most_frequently_used: true,
@@ -88,7 +87,6 @@ class CategorySection extends React.Component{
 
     handleSelectedIcon(key,color){
         this.setState({icon_selected : {"name":key, "color":color}});
-        console.log(this.state.icon_selected["name"]);
     }
 
     handleSelectTime(value){
@@ -99,7 +97,6 @@ class CategorySection extends React.Component{
         if (previousUnit === "minute"){
             //convert minute to hour with a precision of two decimal places
             let hour = Math.round((value/60) * 100)/100;
-            console.log(`hour is ${hour}`);
             return hour
         } else {
             //covert hour to minute
@@ -110,17 +107,14 @@ class CategorySection extends React.Component{
 
     handleSelectUnit(){
         //need to use prev state since we are using previous state to update current state
-        this.setState(prevState => ({unit: prevState.unit == "hour"? "minute":"hour"}), function(){
+        this.setState(prevState => ({unit: prevState.unit === "hour"? "minute":"hour"}), function(){
             //need to use a callback here since state is not update immediately
-            console.log(this.state.unit)
             //do unit conversion for the previous input (if any)
-            if (this.state.unit == "hour"){
+            if (this.state.unit === "hour"){
                 const new_time = this.convertTimeUnit("minute", this.state.time)
-                console.log(`new time is ${new_time}`)
                 this.setState({time: new_time})
             } else {
                 const new_time = this.convertTimeUnit("hour", this.state.time)
-                console.log(`new time is ${new_time}`)
                 this.setState({time: new_time})
             }
         })
@@ -151,10 +145,8 @@ class CategorySection extends React.Component{
         } else {
             //if unit is "minute", number should be an integer
             if (this.state.time%1 === 0){
-                console.log("time is valid");
                 this.setState ({is_time_valid : true}, ()=>{typeof callback === "function" && callback})
             } else {
-                console.log("time is not valid");
                 this.setState ({is_time_valid : false}, ()=>{typeof callback === "function" && callback})
             }
         }
@@ -176,7 +168,7 @@ class CategorySection extends React.Component{
     render(){
         return (
                 <div>
-                    <nav className="container">
+                    <nav className="container" style = {{height: "auto"}}>
                         <ul className="nav nav-tabs text-center">
                             <li className = "col-sm-4 col-md-4 col-lg-4" style = {{backgroundColor: this.state.most_frequently_used ? 'blue' : 'aliceblue'}}>
                             <a href = "#most_frequently_used" style = {{color: this.state.most_frequently_used ? 'white':'blue'}}>Most frequently used</a></li>
@@ -192,17 +184,23 @@ class CategorySection extends React.Component{
                         </div>
                     </nav>
                     <div className = "container" id="time section">
-                    <div style = {{display : this.state.is_time_empty? "inline" : "none"}}>
-                        <p className = "alert alert-danger">Time cannot be empty</p>
+                        <div style = {{display : this.state.is_time_empty? "inline" : "none"}}>
+                            <p className = "alert alert-danger">Time cannot be empty</p>
+                        </div>
+                        <div style = {{display : this.state.is_time_valid ? "none" : "inline"}}>
+                            {this.state.unit === "hour" ? <p className = "alert alert-danger">Please round hour to one decimal place.</p> : <p className = "alert alert-danger">Please round minute to an integer</p>} 
+                        </div>
+                        <Time icon_selected = {this.state.icon_selected} value = {this.state.time} onSelectTime = {this.handleSelectTime} onSelectUnit = {this.handleSelectUnit} unit = {this.state.unit}></Time>
                     </div>
-                    <div style = {{display : this.state.is_time_valid ? "none" : "inline"}}>
-                        {this.state.unit === "hour" ? <p className = "alert alert-danger">Please round hour to one decimal place.</p> : <p className = "alert alert-danger">Please round minute to an integer</p>} 
+                    <div className = "container mt-2" id="description section">
+                        <p> Write something down to celebrate what you have achieved: </p>
+                        <textarea id = "emoji-area"></textarea>
                     </div>
-                    <Time icon_selected = {this.state.icon_selected} value = {this.state.time} onSelectTime = {this.handleSelectTime} onSelectUnit = {this.handleSelectUnit} unit = {this.state.unit}></Time>
+                    <div className = "container mt-5">
+                        <div style = {{width :"250px", margin : "auto"}}>
+                            <button type= "button" className="btn-primary" style = {{width : "100%"}}onClick = {this.handleSubmit}>Create an entry</button>
+                        </div>
                     </div>
-                    <p> Write something done to celebrate what you have achieved: </p>
-                    <textarea id = "emoji-area"></textarea>
-                    <button className="btn-primary" onClick = {this.handleSubmit}>Create task entry</button>
                 </div>
                 )
     }
