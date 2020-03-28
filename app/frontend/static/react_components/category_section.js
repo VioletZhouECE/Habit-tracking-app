@@ -9,6 +9,7 @@ class CategorySection extends React.Component{
     constructor(props){
         super(props)
         //init state
+        self = this;
         this.state = {
             most_frequently_used: true,
             all_incomes:false,
@@ -35,7 +36,11 @@ class CategorySection extends React.Component{
             icon_selected: {"name":"code","color":"gray"},
             section_in_display: "most_frequently_used",
             time: "Enter time",
-            unit : "hour"
+            unit : "hour",
+            is_time_valid: true,
+            is_time_empty: false,
+            should_validate_empty: false,
+            is_data_valid: true
         }
 
         //bind event handling methods to class component
@@ -43,6 +48,9 @@ class CategorySection extends React.Component{
         this.handleSelectedIcon = this.handleSelectedIcon.bind(this);
         this.handleSelectTime = this.handleSelectTime.bind(this);
         this.handleSelectUnit = this.handleSelectUnit.bind(this);
+        this.handleClickTextarea = this.handleClickTextarea.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateTime = this.validateTime.bind(this);
     }
 
     componentDidMount(){
@@ -85,9 +93,7 @@ class CategorySection extends React.Component{
     }
 
     handleSelectTime(value){
-        this.setState(prevState => (
-            {time:prevState.time === "Enter time" ? '' : value}))
-        console.log(this.state.time)
+        this.setState(prevState =>({time:prevState.time === "Enter time" ? '' : value }),()=>{this.validateTime()});
     }
 
     convertTimeUnit(previousUnit, value){
@@ -121,6 +127,57 @@ class CategorySection extends React.Component{
         })
     }
 
+    handleClickTextarea(){
+        this.setState({should_validate_empty : true}, () => {this.validateTime()});
+    }
+
+    //validate time section
+    validateTime(callback=null){
+        //we only need to validate empty data after the "create an entry" button is clicked
+        if (this.state.should_validate_empty){
+            if (this.state.time === '' || this.state.time === 0 || this.state.time === 'Enter time'){
+                this.setState ({is_time_empty : true}, ()=>{
+                    typeof callback === "function" && callback})
+                    return;
+                } else {
+                    this.setState ({is_time_empty : false}, ()=>{
+                        typeof callback === "function" && callback})
+                }
+            }
+
+        if (this.state.unit === "hour"){
+            //if unit is "hour", number should be rounded to 1 decimal place
+            if (this.state.time*10 === parseInt(this.state.time*10)){
+                this.setState ({is_time_valid : true}, ()=>{typeof callback === "function" && callback})
+                } else {
+                this.setState ({is_time_valid : false}, ()=>{
+                    typeof callback === "function" && callback})
+                }
+        } else {
+            //if unit is "minute", number should be an integer
+            if (this.state.time%1 === 0){
+                console.log("time is valid");
+                this.setState ({is_time_valid : true}, ()=>{typeof callback === "function" && callback})
+            } else {
+                console.log("time is not valid");
+                this.setState ({is_time_valid : false}, ()=>{typeof callback === "function" && callback})
+            }
+        }
+    }
+
+    handleSubmit(){
+        const submitCallback = function (){
+            //if time is valid and time is not empty
+            if (this.state.is_time_valid && !this.state.is_time_empty){
+                //make an ajax call to sumbit the data
+                console.log("make an ajax call")
+            }
+        }.bind(this);
+
+        this.setState({should_validate_empty : true}, () => {
+            this.validateTime(submitCallback)});
+    }
+
     render(){
         return (
                 <div>
@@ -140,10 +197,17 @@ class CategorySection extends React.Component{
                         </div>
                     </nav>
                     <div className = "container" id="time section">
-                    <Time icon_selected = {this.state.icon_selected} value = {this.state.time} onSelectTime = {this.handleSelectTime} onSelectUnit = {this.handleSelectUnit} unit = {this.state.unit}></Time>
-                    <p> Write something done to celebrate what you have achieved: </p>
-                    <textarea id = "emoji-area"></textarea>
+                    <div style = {{display : this.state.is_time_empty? "inline" : "none"}}>
+                        <p className = "alert alert-danger">Time cannot be empty</p>
                     </div>
+                    <div style = {{display : this.state.is_time_valid ? "none" : "inline"}}>
+                        {this.state.unit === "hour" ? <p className = "alert alert-danger">Please round hour to one decimal place.</p> : <p className = "alert alert-danger">Please round minute to an integer</p>} 
+                    </div>
+                    <Time icon_selected = {this.state.icon_selected} value = {this.state.time} onSelectTime = {this.handleSelectTime} onSelectUnit = {this.handleSelectUnit} unit = {this.state.unit}></Time>
+                    </div>
+                    <p> Write something done to celebrate what you have achieved: </p>
+                    <textarea id = "emoji-area" onChange = {this.handleClicktextarea}></textarea>
+                    <button className="btn-primary" onClick = {this.handleSubmit}>Create task entry</button>
                 </div>
                 )
     }
