@@ -42,7 +42,16 @@ class CategorySection extends React.Component{
         this.handleClickTab = this.handleClickTab.bind(this);
         this.handleSelectedIcon = this.handleSelectedIcon.bind(this);
         this.handleSelectTime = this.handleSelectTime.bind(this);
-        this.handleSelectUnit = this.handleSelectUnit.bind(this)
+        this.handleSelectUnit = this.handleSelectUnit.bind(this);
+    }
+
+    componentDidMount(){
+        $("#emoji-area").emojioneArea(
+            {
+                autocomplete: false,
+                pickerPosition: "bottom" 
+            }
+        );
     }
 
     handleClickTab(eventTextContent){
@@ -132,6 +141,8 @@ class CategorySection extends React.Component{
                     </nav>
                     <div className = "container" id="time section">
                     <Time icon_selected = {this.state.icon_selected} value = {this.state.time} onSelectTime = {this.handleSelectTime} onSelectUnit = {this.handleSelectUnit} unit = {this.state.unit}></Time>
+                    <p> Write something done to celebrate what you have achieved: </p>
+                    <textarea id = "emoji-area"></textarea>
                     </div>
                 </div>
                 )

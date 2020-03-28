@@ -24,16 +24,6 @@ var ui = new HomepageUIElement()
 //ReactDOM.render(<SidebarOriginal/>, ui.sidebar_collapse)
 //};
 
-//load emojione area
-$(document).ready(function() {
-    $("#emoji-area").emojioneArea(
-        {
-            autocomplete: false,
-            pickerPosition: "bottom" 
-        }
-    );
-});
-
 ui.hamburger_menu.addEventListener('click', () => {
     console.log(`now the minwidth is ${document.querySelector('#sidebar').offsetWidth}`)
     if (document.querySelector('#sidebar').offsetWidth == "170"){
