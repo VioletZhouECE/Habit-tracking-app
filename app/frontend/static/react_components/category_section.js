@@ -37,6 +37,7 @@ class CategorySection extends React.Component{
             section_in_display: "most_frequently_used",
             time: "Enter time",
             unit : "hour",
+            is_number: true,
             is_time_valid: true,
             is_time_empty: false,
             is_num_digit_valid: true,
@@ -125,16 +126,22 @@ class CategorySection extends React.Component{
     }
 
     //validate time section
-    validateTime(callback=null){
+    validateTime(){
         //we only need to validate empty data after the "create an entry" button is clicked
         if (this.state.should_validate_empty){
             if (this.state.time === '' || this.state.time === 0 || this.state.time === 'Enter time'){
                     this.setState ({is_time_empty : true});
-                    return;
                 } else {
                     this.setState ({is_time_empty : false});
                 }
             }
+
+        if (this.state.time === '' || this.state.time === "Enter time" || !isNaN(this.state.time)){
+            this.setState({is_number : true})
+        } else {
+            this.setState({is_number : false})
+            return;
+        }
 
         if (this.state.unit === "hour"){
             //if unit is "hour"
@@ -153,7 +160,7 @@ class CategorySection extends React.Component{
         }
 
         if (this.state.time === '' || this.state.time * 10 === parseInt(this.state.time * 10)){
-            this.setState ({is_num_digit_valid : true}, ()=>{callback != null? callback(): null})
+            this.setState ({is_num_digit_valid : true})
         } else {
             this.setState ({is_num_digit_valid : false})
         }
@@ -176,7 +183,7 @@ class CategorySection extends React.Component{
     handleSubmit(){
         const submitCallback = function (){
             //if time is valid and time is not empty
-            if (this.state.is_time_valid && !this.state.is_time_empty){
+            if (is_num_digit_valid){
                 //retrieve text on emojionearea 
                 var description = $("#emoji-area").data("emojioneArea").getText();
                 //make an ajax call to sumbit the data
@@ -211,6 +218,9 @@ class CategorySection extends React.Component{
                     <div className = "container" id="time section">
                         <div style = {{display : this.state.is_time_empty? "inline" : "none"}}>
                             <p className = "alert alert-danger">Time cannot be empty</p>
+                        </div>
+                        <div style = {{display : this.state.is_number? "none" : "inline"}}>
+                            <p className = "alert alert-danger">Only numbers should be entered</p>
                         </div>
                         <div style = {{display : this.state.is_num_digit_valid? "none" : "inline"}}>
                             <p className = "alert alert-danger">Please round time to one decimal place</p>
