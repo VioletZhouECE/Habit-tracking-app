@@ -33,7 +33,7 @@ class CategorySection extends React.Component{
               {"name":"book-reader","description":"study"}, {"name":"hands-helping", "description": "help others"}, 
               {"name":"home", "description": "do chores"}, {"name":"running", "description":"workout"}],
 
-            icon_selected: {"name":"code","color":"gray"},
+            icon_selected: {"name":"code","description":"code", "color":"gray"},
             section_in_display: "most_frequently_used",
             time: "Enter time",
             unit : "hour",
@@ -42,6 +42,9 @@ class CategorySection extends React.Component{
             should_validate_empty: false,
             is_data_valid: true
         }
+
+        //use this.baseState to store the init state
+        this.baseState = this.state;
 
         //bind event handling methods to class component
         this.handleClickTab = this.handleClickTab.bind(this);
@@ -85,8 +88,8 @@ class CategorySection extends React.Component{
         }
     }
 
-    handleSelectedIcon(key,color){
-        this.setState({icon_selected : {"name":key, "color":color}});
+    handleSelectedIcon(key,description,color){
+        this.setState({icon_selected : {"name":key, "description" : description, "color":color}});
     }
 
     handleSelectTime(value){
@@ -125,39 +128,54 @@ class CategorySection extends React.Component{
         //we only need to validate empty data after the "create an entry" button is clicked
         if (this.state.should_validate_empty){
             if (this.state.time === '' || this.state.time === 0 || this.state.time === 'Enter time'){
-                this.setState ({is_time_empty : true}, ()=>{
-                    typeof callback === "function" && callback})
+                    this.setState ({is_time_empty : true});
                     return;
                 } else {
-                    this.setState ({is_time_empty : false}, ()=>{
-                        typeof callback === "function" && callback})
+                    this.setState ({is_time_empty : false});
                 }
             }
 
         if (this.state.unit === "hour"){
             //if unit is "hour", number should be rounded to 1 decimal place
             if (this.state.time*10 === parseInt(this.state.time*10)){
-                this.setState ({is_time_valid : true}, ()=>{typeof callback === "function" && callback})
+                this.setState ({is_time_valid : true}, ()=>{typeof callback === "function" && callback()})
                 } else {
-                this.setState ({is_time_valid : false}, ()=>{
-                    typeof callback === "function" && callback})
+                this.setState ({is_time_valid : false})
                 }
         } else {
             //if unit is "minute", number should be an integer
             if (this.state.time%1 === 0){
                 this.setState ({is_time_valid : true}, ()=>{typeof callback === "function" && callback})
             } else {
-                this.setState ({is_time_valid : false}, ()=>{typeof callback === "function" && callback})
+                this.setState ({is_time_valid : false})
             }
         }
+    }
+
+    resetForm(){
+        //reset/remount the component
+        this.setState (this.baseState);
+        //clear text on emojionearea
+        $("#emoji-area").data("emojioneArea").setText('');
+    }
+
+    displaySuccessMessage(){
+        $("#success_message").css("display", "inline");
+        window.setTimeout(() => {
+            $("#success_message").css("display", "none");
+        }, 3000)
     }
 
     handleSubmit(){
         const submitCallback = function (){
             //if time is valid and time is not empty
             if (this.state.is_time_valid && !this.state.is_time_empty){
+                //retrieve text on emojionearea 
+                var description = $("#emoji-area").data("emojioneArea").getText();
                 //make an ajax call to sumbit the data
-                console.log("make an ajax call")
+                console.log("make an ajax call");
+                this.resetForm();
+                this.displaySuccessMessage();
             }
         }.bind(this);
 
@@ -198,7 +216,7 @@ class CategorySection extends React.Component{
                     </div>
                     <div className = "container mt-5">
                         <div style = {{width :"250px", margin : "auto"}}>
-                            <button type= "button" className="btn-primary" style = {{width : "100%"}}onClick = {this.handleSubmit}>Create an entry</button>
+                            <button type= "button" className="btn-primary" style = {{width : "100%"}} onClick = {this.handleSubmit}>Create an entry</button>
                         </div>
                     </div>
                 </div>

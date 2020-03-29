@@ -33,7 +33,7 @@ class Time extends React.Component{
             <InputGroup id = "time-inputgroup" className = "align-items-center">
                 <p className = "float-left pr-2 pt-3">Today, I</p>
                 <p className = "float-left pr-2 pt-3" style = {{color: this.props.icon_selected["color"]}}>
-                {this.props.icon_selected["name"]}</p> 
+                {this.props.icon_selected["description"]}</p> 
                 <p className = "float-left pr-2 pt-3">for</p>
                 <FormControl 
                 value = {this.props.value} 
