@@ -22,12 +22,14 @@ class MostFrequentlyUsed extends React.Component{
                 let name = e.target.id
                 //get the color of the selected icon by iterating the list
                 let color;
+                let description;
                 self.props.lst_of_icons.forEach((icon)=>{
                     if (icon["name"] == name){
+                        description = icon["description"];
                         color = icon["color"];
                     }
                 })
-                self.props.onSelectedIcon(name, color)
+                self.props.onSelectedIcon(name, description, color)
                 self.setState({selected: name})
                 //remove effect on other icons 
                 e.target.parentElement.parentElement.parentElement.querySelectorAll("span").forEach((icon)=>{
