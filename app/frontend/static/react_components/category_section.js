@@ -131,7 +131,7 @@ class CategorySection extends React.Component{
     }
 
     //validate time section
-    validateTime(){
+    validateTime(callback=null){
         //we only need to validate empty data after the "create an entry" button is clicked
         if (this.state.should_validate_empty){
             if (this.state.time === '' || this.state.time === 0 || this.state.time === 'Enter time'){
@@ -168,7 +168,7 @@ class CategorySection extends React.Component{
 
         //validate if number is rounded to one decimal place
         if (this.state.time === '' || this.state.time * 10 === parseInt(this.state.time * 10)){
-            this.setState ({is_num_digit_valid : true})
+            this.setState ({is_num_digit_valid : true}, ()=>{typeof callback === "function" && callback()})
         } else {
             this.setState ({is_num_digit_valid : false})
         }
@@ -191,7 +191,7 @@ class CategorySection extends React.Component{
     handleSubmit(){
         const submitCallback = function (){
             //if time is valid and time is not empty
-            if (is_num_digit_valid){
+            if (this.state.is_num_digit_valid){
                 //retrieve text on emojionearea 
                 var description = $("#emoji-area").data("emojioneArea").getText();
                 //make an ajax call to sumbit the data
@@ -202,7 +202,7 @@ class CategorySection extends React.Component{
         }.bind(this);
 
         this.setState({should_validate_empty : true}, () => {
-            this.validateTime(submitCallback)});
+        this.validateTime(submitCallback)});
     }
 
     render(){
