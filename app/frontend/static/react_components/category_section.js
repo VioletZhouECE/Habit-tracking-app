@@ -100,8 +100,8 @@ class CategorySection extends React.Component{
 
     convertTimeUnit(previousUnit, value){
         if (previousUnit === "minute"){
-            //convert minute to hour with a precision of two decimal places
-            let hour = Math.round((value/60) * 100)/100;
+            //convert minute to hour with a precision of one decimal places
+            let hour = Math.round((value/60) * 10)/10;
             return hour
         } else {
             //covert hour to minute
