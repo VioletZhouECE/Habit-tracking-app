@@ -39,6 +39,7 @@ class CategorySection extends React.Component{
             unit : "hour",
             is_time_valid: true,
             is_time_empty: false,
+            is_num_digit_valid: true,
             should_validate_empty: false,
             is_data_valid: true
         }
@@ -136,19 +137,25 @@ class CategorySection extends React.Component{
             }
 
         if (this.state.unit === "hour"){
-            //if unit is "hour", number should be rounded to 1 decimal place
-            if (this.state.time*10 === parseInt(this.state.time*10)){
-                this.setState ({is_time_valid : true}, ()=>{typeof callback === "function" && callback()})
+            //if unit is "hour"
+            if (this.state.time === '' || (this.state.time >= 0 && this.state.time < 24)){
+                this.setState ({is_time_valid: true})
                 } else {
                 this.setState ({is_time_valid : false})
                 }
         } else {
-            //if unit is "minute", number should be an integer
-            if (this.state.time%1 === 0){
-                this.setState ({is_time_valid : true}, ()=>{typeof callback === "function" && callback})
+            //if unit is "minute"
+            if (this.state.time === '' || (this.state.time >= 0 && this.state.time < 1440)){
+                this.setState ({is_time_valid : true})
             } else {
                 this.setState ({is_time_valid : false})
             }
+        }
+
+        if (this.state.time === '' || this.state.time * 10 === parseInt(this.state.time * 10)){
+            this.setState ({is_num_digit_valid : true}, ()=>{callback != null? callback(): null})
+        } else {
+            this.setState ({is_num_digit_valid : false})
         }
     }
 
@@ -205,8 +212,11 @@ class CategorySection extends React.Component{
                         <div style = {{display : this.state.is_time_empty? "inline" : "none"}}>
                             <p className = "alert alert-danger">Time cannot be empty</p>
                         </div>
+                        <div style = {{display : this.state.is_num_digit_valid? "none" : "inline"}}>
+                            <p className = "alert alert-danger">Please round time to one decimal place</p>
+                        </div>
                         <div style = {{display : this.state.is_time_valid ? "none" : "inline"}}>
-                            {this.state.unit === "hour" ? <p className = "alert alert-danger">Please round hour to one decimal place.</p> : <p className = "alert alert-danger">Please round minute to an integer</p>} 
+                            {this.state.unit === "hour" ? <p className = "alert alert-danger">Please enter a valid time: hour must be positive and smaller than 24</p> : <p className = "alert alert-danger">Please enter a valid time: minute must be positive and smaller than 1440</p>} 
                         </div>
                         <Time icon_selected = {this.state.icon_selected} value = {this.state.time} onSelectTime = {this.handleSelectTime} onSelectUnit = {this.handleSelectUnit} unit = {this.state.unit}></Time>
                     </div>
