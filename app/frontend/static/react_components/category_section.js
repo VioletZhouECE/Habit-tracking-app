@@ -115,6 +115,11 @@ class CategorySection extends React.Component{
         this.setState(prevState => ({unit: prevState.unit === "hour"? "minute":"hour"}), function(){
             //need to use a callback here since state is not update immediately
             //do unit conversion for the previous input (if any)
+            if (isNaN(this.state.time) || this.state.time === ''){
+                //do not do conversion if time is not a number
+                return;
+            }
+
             if (this.state.unit === "hour"){
                 const new_time = this.convertTimeUnit("minute", this.state.time)
                 this.setState({time: new_time})
@@ -135,7 +140,8 @@ class CategorySection extends React.Component{
                     this.setState ({is_time_empty : false});
                 }
             }
-
+        
+        //validate if only numbers are entered
         if (this.state.time === '' || this.state.time === "Enter time" || !isNaN(this.state.time)){
             this.setState({is_number : true})
         } else {
@@ -143,6 +149,7 @@ class CategorySection extends React.Component{
             return;
         }
 
+        //validate if time is valid
         if (this.state.unit === "hour"){
             //if unit is "hour"
             if (this.state.time === '' || (this.state.time >= 0 && this.state.time < 24)){
@@ -159,6 +166,7 @@ class CategorySection extends React.Component{
             }
         }
 
+        //validate if number is rounded to one decimal place
         if (this.state.time === '' || this.state.time * 10 === parseInt(this.state.time * 10)){
             this.setState ({is_num_digit_valid : true})
         } else {
