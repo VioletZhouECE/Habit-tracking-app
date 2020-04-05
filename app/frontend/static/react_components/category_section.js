@@ -132,15 +132,19 @@ class CategorySection extends React.Component{
 
     //validate time section
     validateTime(callback=null){
+
         //we only need to validate empty data after the "create an entry" button is clicked
         if (this.state.should_validate_empty){
             if (this.state.time === '' || this.state.time === 0 || this.state.time === 'Enter time'){
                     this.setState ({is_time_empty : true});
+                    //before we return, remove the "only numbers should be entered error message if there is one"
+                    this.setState({is_number : true});
+                    return;
                 } else {
                     this.setState ({is_time_empty : false});
                 }
             }
-        
+
         //validate if only numbers are entered
         if (this.state.time === '' || this.state.time === "Enter time" || !isNaN(this.state.time)){
             this.setState({is_number : true})
@@ -168,6 +172,7 @@ class CategorySection extends React.Component{
 
         //validate if number is rounded to one decimal place
         if (this.state.time === '' || this.state.time * 10 === parseInt(this.state.time * 10)){
+            //call the handleSubmitcallback after this validation is done
             this.setState ({is_num_digit_valid : true}, ()=>{typeof callback === "function" && callback()})
         } else {
             this.setState ({is_num_digit_valid : false})

@@ -16,13 +16,13 @@ function sidebarCollapse() {
                     <a href = "#"><i className="fas fa-tasks"></i></a>
                 </li>
                 <li id = "nav_statistics" className = "mt-2 pl5">
-                    <a href = "#"><i className="fas fa-chart-line"></i></a>
+                    <a href = "#"><i className="fas fa-calendar-minus"></i></a>
                 </li>
                 <li id = "nav_create_plans" className = "mt-2 pl5">
-                    <a href = "#"><i className="fas fa-edit"></i></a>
+                    <a href = "#"><i className="fas fa-user-circle"></i></a>
                 </li>
                 <li id = "nav_achievements" className = "mt-2 pl5">
-                    <a href = "#"><i className="fas fa-trophy"></i></a>
+                    <a href = "#"><i className="fas fa-comment"></i></a>
                 </li>
             </ul>
         </nav>
