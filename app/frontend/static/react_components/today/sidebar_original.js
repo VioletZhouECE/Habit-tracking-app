@@ -1,16 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {Link} from "react-router-dom";
 
 function sidebarOriginal() {
     return (
-        <nav id="sidebar" className = "pl-3 sidebar-width pt-2">
+        <nav id="sidebar_original" className = "pl-3 sidebar-width pt-2">
             <div className="sidebar-header">
                 <h3>Violet Zhou</h3>
             </div>
             <ul className="list-unstyled components">
                 <p>Time</p>
                 <li className="active">
-                    <a href = "#"><i className="fas fa-plus-circle fa-2x"></i></a>
+                    <Link to='/create_a_plan'><i className="fas fa-plus-circle fa-2x"></i></Link>
                 </li>
                 <li id = "nav_work_flow" className = "mt-2">
                     <a href = "#"><i className="fas fa-tasks"></i></a><a href = "#" className = "pl-3">Plans</a>
