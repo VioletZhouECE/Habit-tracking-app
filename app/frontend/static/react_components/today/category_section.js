@@ -212,8 +212,9 @@ class CategorySection extends React.Component{
 
     render(){
         return (
-                <div>
-                    <nav className="container" style = {{height: "auto"}}>
+            <div>
+                <header>Create an Entry</header>
+                    <nav className="container pt-3" style = {{height: "auto"}}>
                         <ul className="nav nav-tabs text-center">
                             <li className = "col-sm-4 col-md-4 col-lg-4" style = {{backgroundColor: this.state.most_frequently_used ? 'blue' : 'aliceblue'}}>
                             <a href = "#most_frequently_used" style = {{color: this.state.most_frequently_used ? 'white':'blue'}}>Most frequently used</a></li>
