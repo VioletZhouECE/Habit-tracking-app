@@ -90,11 +90,10 @@
 /*!****************!*\
   !*** ./app.js ***!
   \****************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ \"express\");\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);\n\napp = express__WEBPACK_IMPORTED_MODULE_0___default()();\napp.set('view-engine', 'ejs');\napp.get('/', function (req, res) {\n  res.render('../frontend/template/home.js');\n});\napp.listen(3000);\n\n//# sourceURL=webpack:///./app.js?");
+eval("var express = __webpack_require__(/*! express */ \"express\");\n\napp = express(); //app.set('view-engine', 'ejs');\n\napp.use(express[\"static\"]('../frontend/public'));\napp.get('/*', function (req, res) {\n  res.render('/template/home.html');\n});\napp.listen(3000, '127.0.0.1');\n\n//# sourceURL=webpack:///./app.js?");
 
 /***/ }),
 
