@@ -1,14 +1,13 @@
-var path = require("path")
-var nodeExternals = require('webpack-node-externals')
+//var nodeExternals = require('webpack-node-externals')
 
 module.exports = {
     entry: {
-        path: path.resolve(__dirname + "/app.js")
+        path: "/Users/zhouchun/time_bank_app_node/app/frontend/static/scripts/home.js"
     },
     
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname + "/public")
+        path: "/Users/zhouchun/time_bank_app_node/app/frontend/public"
     },
 
     module: {
@@ -26,6 +25,6 @@ module.exports = {
       ]
     },
 
-    externals: [nodeExternals()],
+    //externals: [nodeExternals()],
     mode: 'development'
   };
