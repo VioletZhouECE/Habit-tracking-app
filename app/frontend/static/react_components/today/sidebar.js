@@ -29,7 +29,7 @@ class sidebar extends React.Component{
             <ul className="list-unstyled components">
                 <p>Time</p>
                 <li className="active">
-                    <Link to='/create_a_plan'><i className= {this.state.mouseOver? "fas fa-plus-circle fa-3x" : "fas fa-plus-circle fa-2x"} style = {{color : this.state.mouseOver? "tomato" : "orange"}} onMouseOver = {this.handleMouseOver} onMouseLeave = {this.handleMouseLeave}></i></Link>
+                    <Link to='/plans'><i className= {this.state.mouseOver? "fas fa-plus-circle fa-3x" : "fas fa-plus-circle fa-2x"} style = {{color : this.state.mouseOver? "tomato" : "orange"}} onMouseOver = {this.handleMouseOver} onMouseLeave = {this.handleMouseLeave}></i></Link>
                 </li>
                 <li id = "nav_work_flow" className = "mt-2">
                     <a href = "#"><i className="fas fa-tasks"></i></a> <a href = "#" className = "pl-3" style = {{display: this.props.collapse? "none" : "inline"}}>Plans</a>
