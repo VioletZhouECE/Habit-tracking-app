@@ -3,6 +3,7 @@ import CategorySection from "./today/category_section";
 import {Route, Switch} from "react-router-dom";
 import Sidebar from "./today/sidebar";
 import Plans from "./plans/plans"
+import SinglePlan from "./plans/plan_detail"
 
 class MainPage extends React.Component{
     constructor(props){
@@ -33,7 +34,8 @@ class MainPage extends React.Component{
                 <h5 className = "float-right pr-4 pt-2">Item3</h5>
                 <div id="main_container" class="mt-4">
                 <Switch>
-                    <Route path= '/create_a_plan' component = {Plans}></Route>
+                    <Route path = '/plan/:planid' component = {SinglePlan}></Route>
+                    <Route path= '/plans' component = {Plans}></Route>
                     <Route path= '/' component={CategorySection}></Route>
                 </Switch>
                 </div>
