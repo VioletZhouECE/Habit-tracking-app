@@ -9,7 +9,7 @@ class SinglePlan extends React.Component{
     render(){
         return (
             //need to extract part of the url 
-            <div>Plan detail of plan </div>
+            <div>Plan detail of plan {this.props.planId}</div>
         )
     }
 }

@@ -9,7 +9,8 @@ class Plan extends React.Component{
     }
 
     render(){
-        return(<div>
+        return(
+        <div>
             <h3>{this.props.plan.title}</h3>
             <h3>{this.props.plan.category}</h3>
             <h3>{this.props.plan.description}</h3>

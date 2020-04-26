@@ -26,8 +26,8 @@ class Plans extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            isEditing: false,
-            selectedPost: null,
+            isEditing: this.props.isEditing? this.props.isEditing : false,
+            selectedPost: this.props.selectedPost? this.props.selectedPost : null,
             plans: plans,
             totalPlans: 0
         }
@@ -39,7 +39,7 @@ class Plans extends React.Component{
     }
 
     editHandler(planId){
-        this.setState ({isEditing : true, selectedPost : plan});
+        this.setState ({isEditing : true, selectedPost : planId});
     }
 
     deleteHandler(planId){
@@ -61,8 +61,8 @@ class Plans extends React.Component{
             rows.push(<Plan 
             key={plan.planId}
             plan={plan} 
-            OnEdit= {this.editHandler} 
-            onDelete = {this.deleteHandler}></Plan>)})
+            onEdit={this.editHandler} 
+            onDelete={this.deleteHandler}></Plan>)})
 
         return (
         <div id= "plans-container">
