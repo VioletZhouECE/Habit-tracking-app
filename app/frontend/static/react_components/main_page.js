@@ -35,8 +35,8 @@ class MainPage extends React.Component{
                 <div id="main_container" class="mt-4">
                 <Switch>
                     <Route path = '/plan/:planid' component = {SinglePlan}></Route>
-                    <Route path= '/plans' component = {()=> <Plans isEditing= {false} selectedPost={null}/>}></Route>
-                    <Route path= '/create_a_plan' render = {(props)=> <Plans isEditing= {true} selectedPost={null}/>}></Route>
+                    <Route path= '/plans' component = {()=> <Plans isEditing= {false}/>}></Route>
+                    <Route path= '/create_a_plan' render = {(props)=> <Plans isEditing= {true}/>}></Route>
                     <Route path= '/' component={CategorySection}></Route>
                 </Switch>
                 </div>
