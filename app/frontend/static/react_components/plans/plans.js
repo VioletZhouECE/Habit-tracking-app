@@ -26,8 +26,8 @@ class Plans extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            isEditing: this.props.isEditing? this.props.isEditing : false,
-            selectedPost: this.props.selectedPost? this.props.selectedPost : null,
+            isEditing: false,
+            selectedPost: null,
             plans: plans,
             totalPlans: 0
         }

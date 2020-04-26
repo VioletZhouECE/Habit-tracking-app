@@ -3,6 +3,8 @@ const path = require('path')
 
 app = express();
 
+app.set('view engine', 'jade')
+
 //serve home.html
 app.use(express.static("/Users/zhouchun/time_bank_app_node/app/frontend/template"));
 
@@ -10,7 +12,7 @@ app.use(express.static("/Users/zhouchun/time_bank_app_node/app/frontend/template
 app.use(express.static("/Users/zhouchun/time_bank_app_node/app/frontend"));
 
 app.get( '/*', (req, res) => {
-    res.redirect("/Users/zhouchun/time_bank_app_node/app/frontend/template/home.html")
+    res.render('index');
 })
 
 app.listen(3000, '127.0.0.1');

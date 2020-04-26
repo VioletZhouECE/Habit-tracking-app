@@ -12,7 +12,6 @@ class PlanEdit extends React.Component{
         return this.props.isEditing?(
             <div>
                 <div>Plan Edit</div>
-                {this.props.selectedPost? null : <Link to='/plans'><button type = "button" className = "btn-primary view-button">Close</button></Link>}
             </div>
         ) : null
     }
