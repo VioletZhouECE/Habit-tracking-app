@@ -7,7 +7,7 @@ import Plan from "./plan";
 const plans = [
     {"planId" : "12345",
     "title" : "learn python",
-    "category" : "be productive",
+    "category" : "productive",
     "icon" : null,
     "description" : "write pythonic code and be a pythonic person",
     "completed" : "10",
@@ -15,7 +15,7 @@ const plans = [
 
     {"planId" : "12346",
     "title" : "reading",
-    "category" : "be knowledgeable",
+    "category" : "knowledgeable",
     "icon" : null,
     "description" : "read more, be smarter",
     "completed" : "3",

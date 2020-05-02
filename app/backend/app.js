@@ -3,6 +3,7 @@ const path = require('path')
 
 app = express();
 
+//use jade to render the html template
 app.set('view engine', 'jade')
 
 //serve home.html
