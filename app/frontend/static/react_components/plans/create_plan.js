@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import FontIconPicker from '@fonticonpicker/react-fonticonpicker';
+import icons from '../../scripts/fontawesome_icons';
 
 const icon_colors = [
     ["grey", "gainsboro", "grey", "bluegrey"],
     ["blue", "lightblue", "dodgerblue", "lightblue"],
     ["pink", "lightpink", "#ff1a75", "pink"],
-    ["orange", "rgba(255, 191, 0)" , "orange", "orange"],
+    ["orange", "rgb(247, 211, 104)" , "orange", "orange"],
     ["teal", "turquoise", "teal", "teal"]
 ]
 
@@ -28,7 +29,6 @@ class CreatePlan extends React.Component{
     }
 
     handleSelectColor(selected_color){  
-        console.log(selected_color);
         var selected_icon;
         var selected_theme; 
 
@@ -42,7 +42,6 @@ class CreatePlan extends React.Component{
         //change the selected icon color
         this.setState ({selected_icon_color : selected_icon});
 
-        var selected_theme; 
         //change theme 
         this.setState ({theme : selected_theme});
     }
@@ -52,7 +51,7 @@ class CreatePlan extends React.Component{
         icon_colors.forEach((color)=>{
             //study note: you cannot access key from the child component or through e.target.key
             //you have to use another cutsom html attribute or props to access the key
-            color_palette.push(<span><i key = {color[0]} className="fas fa-circle fa-2x" style={{color: this.state.selected_icon_color === color[0]? color[2] : color[1]}} onClick={(e)=>this.handleSelectColor(e.target.style.color)}></i></span>);
+            color_palette.push(<span><i key = {color[0]} className= {this.state.selected_icon_color === color[0]? "fas fa-circle pr-2 fa-3x" : "fas fa-circle pr-2 fa-2x"} style={{color: this.state.selected_icon_color === color[0]? color[2] : color[1]}} onClick={(e)=>this.handleSelectColor(e.target.style.color)}></i></span>);
         })
 
         return (
@@ -62,7 +61,7 @@ class CreatePlan extends React.Component{
                 <div className="d-flex">
                     <div className="icon-selection">
                         <p className="pt-3"> Pick an icon: </p>
-                        <FontIconPicker icons={['fipicon-angle-left', 'fipicon-angle-right', 'fipicon-angle-up', 'fipicon-angle-down']} value={this.state.icon} onChange={this.handleSelectIcon} theme={this.state.theme}></FontIconPicker>
+                        <FontIconPicker icons={icons} value={this.state.icon} onChange={this.handleSelectIcon} theme={this.state.theme}></FontIconPicker>
                     </div>
                     <div className="icon-color-selection pt-3 pl-5">
                         <p> Pick a color: </p>
