@@ -5,7 +5,7 @@ import icons from '../../scripts/fontawesome_icons';
 
 const icon_colors = [
     ["grey", "gainsboro", "grey", "bluegrey"],
-    ["blue", "lightblue", "dodgerblue", "lightblue"],
+    ["blue", "rgb(163, 212, 255)", "dodgerblue", "lightblue"],
     ["pink", "lightpink", "#ff1a75", "pink"],
     ["orange", "rgb(247, 211, 104)" , "orange", "orange"],
     ["teal", "turquoise", "teal", "teal"]
@@ -25,6 +25,7 @@ class CreatePlan extends React.Component{
         this.handleSelectIcon = this.handleSelectIcon.bind(this);
         this.handleSelectColor = this.handleSelectColor.bind(this);
         this.handleSelectFrequencyUnit = this.handleSelectFrequencyUnit.bind(this);
+        this.handleSelectFrequency = this.handleSelectFrequency.bind(this);
     }
 
     handleSelectIcon(selected_icon){
@@ -53,6 +54,18 @@ class CreatePlan extends React.Component{
         this.setState({frequency_unit : e.target.text});
     }
 
+    handleSelectFrequency(day){
+
+        //"toggle" the day
+        this.setState((prevState) => {
+            if (prevState.selected_frequency.includes(day)){
+                return {selected_frequency : prevState.selected_frequency.replace(day.toString(), '')};
+            } else {
+                return {selected_frequency : prevState.selected_frequency + day.toString()};
+            }
+        })
+    }
+
     render(){
         //render a list of colors 
         var color_palette = [];
@@ -66,9 +79,12 @@ class CreatePlan extends React.Component{
         var weekly_icons = [];
         for (let i=1; i<=7; i++){
             weekly_icons.push(
-                <span class="fa-layers fa-fw">
-                    <i key = {i} className = {this.state.frequency_unit === 'weekly' && this.state.selected_frequency.includes(i.toString())? "fas fa-circle pr-2 fa-3x" : "fas fa-circle pr-2 fa-2x"}></i>
-                    <span key = {"textlayer" + i} className ="fa-layers-text fa-inverse pr-2" data-fa-transform="shrink-8 down-3 pr-2">1</span>
+                <span key = {i} dataAttr = {i} className = "fa fa-stack" onClick = {(e)=>{
+                    console.log("hello world");
+                    this.handleSelectFrequency(e.target.innerText);
+                }}>
+                    <i key = {"circle" + i} className = "fas fa-circle fa-stack-2x pr-2"  style = {{color : this.state.frequency_unit === 'weekly' && this.state.selected_frequency.includes(i.toString())? "dodgerblue" : "rgb(163,212,255)"}}></i>
+                    <span key = {"number" + i} className="fa fa-stack-1x pr-2" style={{color:"white"}}>{i}</span>
                 </span>
             );
         }
@@ -96,7 +112,7 @@ class CreatePlan extends React.Component{
                     <div className = {this.state.frequency_unit === 'weekly'? 'underline' : ''}  style = {{backgroundColor: this.state.frequency_unit === 'weekly' ? 'aliceblue' : ''}} onClick={this.handleSelectFrequencyUnit}><a href="#weekly">weekly</a></div>
                     <div className = {this.state.frequency_unit === 'monthly'? 'pl-2 underline' : 'pl-2'} style = {{backgroundColor: this.state.frequency_unit === 'monthly' ? 'aliceblue' : ''}} onClick={this.handleSelectFrequencyUnit}><a href="#monthly">monthly</a></div>
                 </div>
-                <div className = "d-flex">{weekly_icons}</div>
+                <div className = "d-flex pb-3">{weekly_icons}</div>
                 <p>Choose duration</p>
                 <p>Choose the level of difficulty</p>
                 <p>Write something down to motivate yourself</p>
