@@ -52,3 +52,10 @@ html, body {
 .underline {
     text-decoration: underline;
 }
+
+#monthly-frequency input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
+    width: 40%;
+}

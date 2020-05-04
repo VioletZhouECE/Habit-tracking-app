@@ -89,6 +89,11 @@ class CreatePlan extends React.Component{
             );
         }
 
+        var monthly = <div id = "monthly-frequency" className = "d-flex">
+                        <input className = 'pr-3 mr-3' placeholder = '1'></input>
+                        <p className = 'pt-3 pb-0 mb-0'>times per month</p>
+                      </div>
+
         return (
             <div className = "create-a-plan">
                 <p className="pl-1">Name your habit:</p>
@@ -112,7 +117,7 @@ class CreatePlan extends React.Component{
                     <div className = {this.state.frequency_unit === 'weekly'? 'underline' : ''}  style = {{backgroundColor: this.state.frequency_unit === 'weekly' ? 'aliceblue' : ''}} onClick={this.handleSelectFrequencyUnit}><a href="#weekly">weekly</a></div>
                     <div className = {this.state.frequency_unit === 'monthly'? 'pl-2 underline' : 'pl-2'} style = {{backgroundColor: this.state.frequency_unit === 'monthly' ? 'aliceblue' : ''}} onClick={this.handleSelectFrequencyUnit}><a href="#monthly">monthly</a></div>
                 </div>
-                <div className = "d-flex pb-3">{weekly_icons}</div>
+                <div className = "d-flex pb-3">{this.state.frequency_unit === "weekly"? weekly_icons : monthly}</div>
                 <p>Choose duration</p>
                 <p>Choose the level of difficulty</p>
                 <p>Write something down to motivate yourself</p>
