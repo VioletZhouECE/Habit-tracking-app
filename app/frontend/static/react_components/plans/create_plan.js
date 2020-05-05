@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import FontIconPicker from '@fonticonpicker/react-fonticonpicker';
-import icons from '../../scripts/fontawesome_icons';
+import AllIcons from '../../scripts/fontawesome_icons';
 
 const icon_colors = [
     ["grey", "gainsboro", "grey", "bluegrey"],
@@ -15,17 +15,23 @@ class CreatePlan extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            name : '',
             theme : "bluegrey",
-            icon :'fas fa-smile',
+            icon :'fas fa-image',
             selected_icon_color : "grey",
             frequency_unit: "weekly",
             selected_frequency: ''
         }
 
+        this.handleChangeName = this.handleChangeName.bind(this);
         this.handleSelectIcon = this.handleSelectIcon.bind(this);
         this.handleSelectColor = this.handleSelectColor.bind(this);
         this.handleSelectFrequencyUnit = this.handleSelectFrequencyUnit.bind(this);
         this.handleSelectFrequency = this.handleSelectFrequency.bind(this);
+    }
+
+    handleChangeName(e){
+        this.setState({name : e.target.value});
     }
 
     handleSelectIcon(selected_icon){
@@ -95,27 +101,40 @@ class CreatePlan extends React.Component{
                       </div>
 
         return (
-            <div className = "create-a-plan">
-                <p className="pl-1">Name your habit:</p>
-                <input className= "habit-name" placeholder = "my plan"></input>
-                <div className="d-flex">
-                    <div className="icon-selection">
-                        <p className="pt-3"> Pick an icon: </p>
-                        <FontIconPicker icons={icons} value={this.state.icon} onChange={this.handleSelectIcon} theme={this.state.theme}></FontIconPicker>
+            <div className = "create-a-plan container">
+                <div className='d-flex'>
+                    <div className='pr-5 col-sm-3 col-md-3 col-lg-3 text-center'>
+                        <span className='fas fa-stack fa-3x'>
+                            <i className="far fa-circle fa-stack-2x"></i>
+                            <i className={this.state.icon + " fa-stack-1x"}></i>
+                        </span>
+                        <p className='ml-3 pt-1'>{this.state.name}</p>
                     </div>
-                    <div className="icon-color-selection pt-3 pl-5">
+                    <div className='pl-5 col-sm-6 col-md-6 col-lg-6'>
+                        <p className="pl-1">Name your habit:</p>
+                        <input className= "habit-name" value={this.state.name} onChange={this.handleChangeName}></input>
+                    </div>
+                </div>
+                <div className="d-flex pt-2 pb-4">
+                    <div className="icon-selection col-sm-3 col-md-3 col-lg-3">
+                        <p> Pick an icon: </p>
+                        <FontIconPicker icons={AllIcons} value={this.state.icon} onChange={this.handleSelectIcon} theme={this.state.theme}></FontIconPicker>
+                    </div>
+                    <div className="icon-color-selection col-sm-6 col-md-6 col-lg-6 pl-5">
                         <p> Pick a color: </p>
                         <div className="d-flex pt-3">
                             <div>{color_palette}</div>
                         </div>
                     </div>
                 </div>
-                <p>Add a tag</p>
+                <div>
+                    <p className='d-flex pb-4'>Add a tag</p>
+                </div>
                 <div className = "d-flex pb-2">
                 <p className = 'pr-4 pb-0 mb-0'>Choose a frequency</p> 
                 <div className = 'd-flex'></div>
-                    <div className = {this.state.frequency_unit === 'weekly'? 'underline' : ''}  style = {{backgroundColor: this.state.frequency_unit === 'weekly' ? 'aliceblue' : ''}} onClick={this.handleSelectFrequencyUnit}><a href="#weekly">weekly</a></div>
-                    <div className = {this.state.frequency_unit === 'monthly'? 'pl-2 underline' : 'pl-2'} style = {{backgroundColor: this.state.frequency_unit === 'monthly' ? 'aliceblue' : ''}} onClick={this.handleSelectFrequencyUnit}><a href="#monthly">monthly</a></div>
+                    <div className = {this.state.frequency_unit === 'weekly'? 'underline' : ''}  onClick={this.handleSelectFrequencyUnit}><a href="#weekly">weekly</a></div>
+                    <div className = {this.state.frequency_unit === 'monthly'? 'pl-2 underline' : 'pl-2'} onClick={this.handleSelectFrequencyUnit}><a href="#monthly">monthly</a></div>
                 </div>
                 <div className = "d-flex pb-3">{this.state.frequency_unit === "weekly"? weekly_icons : monthly}</div>
                 <p>Choose duration</p>
