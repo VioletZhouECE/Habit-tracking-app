@@ -35,6 +35,11 @@ class CreatePlan extends React.Component{
         this.handleSelectDurationUnit = this.handleSelectDurationUnit.bind(this);
     }
 
+    componentDidMount(){
+        //demo
+        $('.tokenize-demo').tokenize2();
+    }
+
     handleChangeName(e){
         this.setState({name : e.target.value});
     }
@@ -156,8 +161,15 @@ class CreatePlan extends React.Component{
                         </div>
                     </div>
                 </div>
-                <div>
-                    <p className='d-flex pb-4'>Add a tag</p>
+                <div id="add-tag">
+                    <p className='d-flex pb-4'>Add tag(s)</p>
+                    <select className="tokenize-demo" multiple>
+                        <option value="Africa">Africa</option>
+                        <option value="Americas">Americas</option>
+                        <option value="Asia">Asia</option>
+                        <option value="Europe">Europe</option>
+                        <option value="Oceania">Oceania</option>
+                    </select>
                 </div>
                 <div className = "d-flex pb-2">
                 <p className = 'pr-4 pb-0 mb-0'>Choose a frequency</p> 
