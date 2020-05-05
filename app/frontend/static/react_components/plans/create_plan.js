@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import FontIconPicker from '@fonticonpicker/react-fonticonpicker';
 import AllIcons from '../../scripts/fontawesome_icons';
+import Duration from './duration';
 
 const icon_colors = [
     ["grey", "gainsboro", "grey", "bluegrey"],
@@ -20,7 +21,9 @@ class CreatePlan extends React.Component{
             icon :'fas fa-image',
             selected_icon_color : "grey",
             frequency_unit: "weekly",
-            selected_frequency: ''
+            selected_frequency: '',
+            duration_unit: 'month',
+            duration : 'Click tab to switch unit to week'
         }
 
         this.handleChangeName = this.handleChangeName.bind(this);
@@ -28,6 +31,8 @@ class CreatePlan extends React.Component{
         this.handleSelectColor = this.handleSelectColor.bind(this);
         this.handleSelectFrequencyUnit = this.handleSelectFrequencyUnit.bind(this);
         this.handleSelectFrequency = this.handleSelectFrequency.bind(this);
+        this.handleChangeDuration = this.handleChangeDuration.bind(this);
+        this.handleSelectDurationUnit = this.handleSelectDurationUnit.bind(this);
     }
 
     handleChangeName(e){
@@ -72,6 +77,30 @@ class CreatePlan extends React.Component{
         })
     }
 
+    handleChangeDuration(value){
+        this.setState(prevState => {
+            if (prevState.duration === 'Click tab to switch unit to week'){
+                return {duration: ''};
+            } else {
+                return {duration : value};
+            }
+        });
+    }
+
+    handleSelectDurationUnit(){
+        //toggle unit
+        this.setState(prevState => {
+            if (prevState.duration_unit === 'month'){
+                return {duration_unit: 'week'};
+            } else {
+                return {duration_unit : 'month'};
+            }
+        })
+
+        //empty duration field
+        this.setState({duration : ''});
+    }
+
     render(){
         //render a list of colors 
         var color_palette = [];
@@ -97,7 +126,7 @@ class CreatePlan extends React.Component{
 
         var monthly = <div id = "monthly-frequency" className = "d-flex">
                         <input className = 'pr-3 mr-3' placeholder = '1'></input>
-                        <p className = 'pt-3 pb-0 mb-0'>times per month</p>
+                        <p className = 'pt-3 pb-0 mb-0'>time(s) per month</p>
                       </div>
 
         return (
@@ -136,8 +165,11 @@ class CreatePlan extends React.Component{
                     <div className = {this.state.frequency_unit === 'weekly'? 'underline' : ''}  onClick={this.handleSelectFrequencyUnit}><a href="#weekly">weekly</a></div>
                     <div className = {this.state.frequency_unit === 'monthly'? 'pl-2 underline' : 'pl-2'} onClick={this.handleSelectFrequencyUnit}><a href="#monthly">monthly</a></div>
                 </div>
-                <div className = "d-flex pb-3">{this.state.frequency_unit === "weekly"? weekly_icons : monthly}</div>
-                <p>Choose duration</p>
+                <div className = "d-flex pb-4">{this.state.frequency_unit === "weekly"? weekly_icons : monthly}</div>
+                <p className = 'pb-1'>Enter duration: </p>
+                <div>
+                    <Duration value={this.state.duration} unit={this.state.duration_unit} onChangeDuration={this.handleChangeDuration} onSelectUnit={this.handleSelectDurationUnit}>Choose duration</Duration>
+                </div>
                 <p>Choose the level of difficulty</p>
                 <p>Write something down to motivate yourself</p>
             </div>

@@ -39,7 +39,7 @@ class Time extends React.Component{
                 value = {this.props.value} 
                 onClick = {(e) => this.props.onSelectTime(e.target.value)}
                 onChange = {(e) => this.props.onSelectTime(e.target.value)}
-                aria-label="Recipient's username"
+                aria-label="duration"
                 aria-describedby="basic-addon2"
                 ></FormControl>
                 <InputGroup.Append>
