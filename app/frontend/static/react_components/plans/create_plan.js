@@ -20,10 +20,11 @@ class CreatePlan extends React.Component{
             theme : "bluegrey",
             icon :'fas fa-image',
             selected_icon_color : "grey",
+            tags: [],
             frequency_unit: "weekly",
             selected_frequency: '',
             duration_unit: 'month',
-            duration : 'Click tab to switch unit to week'
+            duration : 'Click tab to switch unit to week',
         }
 
         this.handleChangeName = this.handleChangeName.bind(this);
@@ -34,10 +35,12 @@ class CreatePlan extends React.Component{
         this.handleChangeDuration = this.handleChangeDuration.bind(this);
         this.handleSelectDurationUnit = this.handleSelectDurationUnit.bind(this);
     }
-
+    
     componentDidMount(){
-        //demo
-        $('.tokenize-demo').tokenize2();
+        $('.add-tag').dropdown({
+            template : function(r){ return "<li><a>"+r.text+"</a></li>";},
+            buttons : [{text:'work'}, {text:'study'}, {text:'health'},{text:'personality'}, {text:'beauty'}, {text:'mindset'}]
+        })
     }
 
     handleChangeName(e){
@@ -119,8 +122,7 @@ class CreatePlan extends React.Component{
         var weekly_icons = [];
         for (let i=1; i<=7; i++){
             weekly_icons.push(
-                <span key = {i} dataAttr = {i} className = "fa fa-stack" onClick = {(e)=>{
-                    console.log("hello world");
+                <span key = {i} className = "fa fa-stack" onClick = {(e)=>{
                     this.handleSelectFrequency(e.target.innerText);
                 }}>
                     <i key = {"circle" + i} className = "fas fa-circle fa-stack-2x pr-2"  style = {{color : this.state.frequency_unit === 'weekly' && this.state.selected_frequency.includes(i.toString())? "dodgerblue" : "rgb(163,212,255)"}}></i>
@@ -161,15 +163,9 @@ class CreatePlan extends React.Component{
                         </div>
                     </div>
                 </div>
-                <div id="add-tag">
-                    <p className='d-flex pb-4'>Add tag(s)</p>
-                    <select className="tokenize-demo" multiple>
-                        <option value="Africa">Africa</option>
-                        <option value="Americas">Americas</option>
-                        <option value="Asia">Asia</option>
-                        <option value="Europe">Europe</option>
-                        <option value="Oceania">Oceania</option>
-                    </select>
+                <div className='pb-4'>
+                    <p className='d-flex'>Add a tag</p>
+                    <span><i className='fas fa-plus add-tag'></i></span>
                 </div>
                 <div className = "d-flex pb-2">
                 <p className = 'pr-4 pb-0 mb-0'>Choose a frequency</p> 
