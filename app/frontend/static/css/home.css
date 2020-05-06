@@ -1,6 +1,6 @@
 html, body {
     margin: 0;
-    height: 100%
+    height: 100%;
 }
 
 #sidebar{
@@ -58,4 +58,15 @@ html, body {
     border: none;
     border-bottom: 1px solid #000000;
     width: 40%;
+}
+
+.tag {
+    border-radius : 20%;
+    height: 20px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.delete-icon {
+    float : right;
 }
