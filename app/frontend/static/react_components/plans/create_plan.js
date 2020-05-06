@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import FontIconPicker from '@fonticonpicker/react-fonticonpicker';
 import AllIcons from '../../scripts/fontawesome_icons';
 import Duration from './duration';
+import Tag from './tag'
 
 const icon_colors = [
     ["grey", "gainsboro", "grey", "bluegrey"],
@@ -25,6 +26,7 @@ class CreatePlan extends React.Component{
             selected_frequency: '',
             duration_unit: 'month',
             duration : 'Click tab to switch unit to week',
+            tags : ["work", "study", "health", "personality"]
         }
 
         this.handleChangeName = this.handleChangeName.bind(this);
@@ -34,6 +36,7 @@ class CreatePlan extends React.Component{
         this.handleSelectFrequency = this.handleSelectFrequency.bind(this);
         this.handleChangeDuration = this.handleChangeDuration.bind(this);
         this.handleSelectDurationUnit = this.handleSelectDurationUnit.bind(this);
+        this.handleDeleteTag = this.handleDeleteTag.bind(this);
     }
     
     componentDidMount(){
@@ -109,6 +112,10 @@ class CreatePlan extends React.Component{
         this.setState({duration : ''});
     }
 
+    handleDeleteTag(){
+        //do nothing for now
+    }
+
     render(){
         //render a list of colors 
         var color_palette = [];
@@ -135,6 +142,12 @@ class CreatePlan extends React.Component{
                         <input className = 'pr-3 mr-3' placeholder = '1'></input>
                         <p className = 'pt-3 pb-0 mb-0'>time(s) per month</p>
                       </div>
+             
+        //render a list of selected tags
+        var tags = [];
+        for (let tag of this.state.tags){
+            tags.push(<Tag tag={tag} onDelete={this.handleDeleteTag}></Tag>);
+        }
 
         return (
             <div className = "create-a-plan container">
@@ -164,8 +177,11 @@ class CreatePlan extends React.Component{
                     </div>
                 </div>
                 <div className='pb-4'>
-                    <p className='d-flex'>Add a tag</p>
-                    <span><i className='fas fa-plus add-tag'></i></span>
+                    <p>Add a tag</p>
+                    <div className='d-flex'>
+                        <span><i className='fas fa-plus add-tag pr-3'></i></span>
+                        <div className='selected-tags d-flex pt-1'>{tags}</div>
+                    </div>
                 </div>
                 <div className = "d-flex pb-2">
                 <p className = 'pr-4 pb-0 mb-0'>Choose a frequency</p> 
