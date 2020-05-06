@@ -13,6 +13,8 @@ const icon_colors = [
     ["teal", "turquoise", "teal", "teal"]
 ]
 
+const all_tags = ["work", 'study', 'health', 'beauty', 'personality', 'mindset'];
+
 class CreatePlan extends React.Component{
     constructor(props){
         super(props);
@@ -21,12 +23,11 @@ class CreatePlan extends React.Component{
             theme : "bluegrey",
             icon :'fas fa-image',
             selected_icon_color : "grey",
-            tags: [],
             frequency_unit: "weekly",
             selected_frequency: '',
             duration_unit: 'month',
             duration : 'Click tab to switch unit to week',
-            tags : ["work", "study", "health", "personality"]
+            selected_tags : []
         }
 
         this.handleChangeName = this.handleChangeName.bind(this);
@@ -36,14 +37,60 @@ class CreatePlan extends React.Component{
         this.handleSelectFrequency = this.handleSelectFrequency.bind(this);
         this.handleChangeDuration = this.handleChangeDuration.bind(this);
         this.handleSelectDurationUnit = this.handleSelectDurationUnit.bind(this);
+        this.handleSelectTag = this.handleSelectTag.bind(this);
         this.handleDeleteTag = this.handleDeleteTag.bind(this);
     }
     
     componentDidMount(){
+        var buttons_object = [];
+
+        all_tags.forEach(tag=>{
+            //important note! Add a closure to tag so the tag variable doesn't propogate up 
+            //the scope when the onClick function is invoked in the browser
+            let current_tag = tag;
+            buttons_object.push({
+                text : tag,
+                onClick : (p,e)=>{this.handleSelectTag(p,e,tag)}
+                })
+            })
+
         $('.add-tag').dropdown({
-            template : function(r){ return "<li><a>"+r.text+"</a></li>";},
-            buttons : [{text:'work'}, {text:'study'}, {text:'health'},{text:'personality'}, {text:'beauty'}, {text:'mindset'}]
-        })
+            buttons : buttons_object})
+    }
+
+    componentDidUpdate(prevState){
+
+        //if selected tags have changed, re-render the jquery dropdown
+        if (prevState.selected_tags !== undefined && (prevState.selected_tags !== this.state.selected_tags)){
+            console.log(prevState.selected_tags);
+            console.log(this.state.selected_tags);
+
+            //get all tags that have not been selected
+            let remaining_tags = [];
+            for (let tag of all_tags){
+                if (!this.state.selected_tags.includes(tag)){
+                    remaining_tags.push(tag);
+                }
+            }
+
+            console.log("remaining tags are " + remaining_tags);
+
+        var buttons_object = [];
+
+        remaining_tags.forEach(tag=>{
+            let current_tag = tag;
+            buttons_object.push({
+                text : tag,
+                onClick : (p,e)=>this.handleSelectTag(p,e,current_tag)
+                })
+            })
+
+        //remove the dropdown from the DOM
+        $('add-tag').html('');
+
+        $('.add-tag').dropdown({
+            buttons : buttons_object})
+        }
     }
 
     handleChangeName(e){
@@ -112,6 +159,17 @@ class CreatePlan extends React.Component{
         this.setState({duration : ''});
     }
 
+    handleSelectTag(p,e,tag){
+        console.log(tag);
+        //add the tag to the selected list of tags 
+        this.setState (prevState => ({
+            //important note! Don't mutate the previous array!
+            selected_tags : [[...prevState.selected_tags] , tag]
+        }))
+    
+        return true;
+    }
+
     handleDeleteTag(){
         //do nothing for now
     }
@@ -145,7 +203,8 @@ class CreatePlan extends React.Component{
              
         //render a list of selected tags
         var tags = [];
-        for (let tag of this.state.tags){
+        for (let tag of this.state.selected_tags){
+            console.log("icon is updated!")
             tags.push(<Tag tag={tag} onDelete={this.handleDeleteTag}></Tag>);
         }
 
