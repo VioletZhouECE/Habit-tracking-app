@@ -58,36 +58,29 @@ class CreatePlan extends React.Component{
             buttons : buttons_object})
     }
 
-    componentDidUpdate(prevState){
+    /*componentDidUpdate(prevState){
 
         //if selected tags have changed, re-render the jquery dropdown
         if (prevState.selected_tags !== undefined && (prevState.selected_tags !== this.state.selected_tags)){
 
-            //get all tags that have not been selected
-            let remaining_tags = [];
-            for (let tag of all_tags){
-                if (!this.state.selected_tags.includes(tag)){
-                    remaining_tags.push(tag);
-                }
-            }
-
-        var buttons_object = [];
-
-        remaining_tags.forEach(tag=>{
-            let current_tag = tag;
-            buttons_object.push({
-                text : tag,
-                onClick : (p,e)=>this.handleSelectTag(p,e,current_tag)
+            this.state.selected_tags.forEach(tag=>{
+                let current_tag = tag;
+                buttons_object.push({
+                    text : tag,
+                    addClass: 'fas fa-check',
+                    onClick : (p,e)=>this.handleSelectTag(p,e,current_tag)
+                    })
                 })
-            })
 
-        //remove the dropdown from the DOM
-        $('add-tag').html('');
+        $('.add-tag').dropdown({
+            buttons : {}})
 
         $('.add-tag').dropdown({
             buttons : buttons_object})
         }
-    }
+
+        console.log("update is complete")
+    }*/
 
     handleChangeName(e){
         this.setState({name : e.target.value});
@@ -157,10 +150,13 @@ class CreatePlan extends React.Component{
 
     handleSelectTag(p,e,tag){
         //add the tag to the selected list of tags 
-        this.setState (prevState => ({
+        this.setState (prevState => {
+            if (prevState.selected_tags.includes(tag)){
+                return;
+            }
             //important note! Don't mutate the previous array!
-            selected_tags : [...prevState.selected_tags , tag]
-        }))
+            return {selected_tags : [...prevState.selected_tags , tag]};
+        })
     
         return true;
     }
@@ -170,8 +166,7 @@ class CreatePlan extends React.Component{
         this.setState (prevState => {
             let array_copy = [...prevState.selected_tags];
             const index = array_copy.indexOf(tag);
-            array_copy.splice(index, 1);        
-            console.log(array_copy);
+            array_copy.splice(index, 1); 
             return {selected_tags : array_copy};
         })
     }
