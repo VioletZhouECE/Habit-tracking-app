@@ -62,8 +62,6 @@ class CreatePlan extends React.Component{
 
         //if selected tags have changed, re-render the jquery dropdown
         if (prevState.selected_tags !== undefined && (prevState.selected_tags !== this.state.selected_tags)){
-            console.log(prevState.selected_tags);
-            console.log(this.state.selected_tags);
 
             //get all tags that have not been selected
             let remaining_tags = [];
@@ -72,8 +70,6 @@ class CreatePlan extends React.Component{
                     remaining_tags.push(tag);
                 }
             }
-
-            console.log("remaining tags are " + remaining_tags);
 
         var buttons_object = [];
 
@@ -160,18 +156,24 @@ class CreatePlan extends React.Component{
     }
 
     handleSelectTag(p,e,tag){
-        console.log(tag);
         //add the tag to the selected list of tags 
         this.setState (prevState => ({
             //important note! Don't mutate the previous array!
-            selected_tags : [[...prevState.selected_tags] , tag]
+            selected_tags : [...prevState.selected_tags , tag]
         }))
     
         return true;
     }
 
-    handleDeleteTag(){
-        //do nothing for now
+    handleDeleteTag(tag){
+
+        this.setState (prevState => {
+            let array_copy = [...prevState.selected_tags];
+            const index = array_copy.indexOf(tag);
+            array_copy.splice(index, 1);        
+            console.log(array_copy);
+            return {selected_tags : array_copy};
+        })
     }
 
     render(){
@@ -204,7 +206,6 @@ class CreatePlan extends React.Component{
         //render a list of selected tags
         var tags = [];
         for (let tag of this.state.selected_tags){
-            console.log("icon is updated!")
             tags.push(<Tag tag={tag} onDelete={this.handleDeleteTag}></Tag>);
         }
 
