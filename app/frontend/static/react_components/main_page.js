@@ -30,9 +30,6 @@ class MainPage extends React.Component{
             <Sidebar collapse={this.state.collapse}></Sidebar>
             <div className = "container-fluid">
                 <a href = "#" onClick={this.handleClick}><i id = "hamburger-menu" class="fas fa-bars fa-1x pt-2"></i></a>
-                <h5 className = "float-right pr-4 pt-2">Item1</h5>
-                <h5 className = "float-right pr-4 pt-2">Item2</h5>
-                <h5 className = "float-right pr-4 pt-2">Item3</h5>
                 <div id="main_container" class="mt-4">
                 <Switch>
                     <Route path = '/plan/:planid' component = {SinglePlan}></Route>
