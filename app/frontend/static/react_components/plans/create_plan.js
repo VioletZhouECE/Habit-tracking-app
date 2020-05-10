@@ -28,7 +28,8 @@ class CreatePlan extends React.Component{
             duration_unit: 'month',
             duration : 'Click tab to switch unit to week',
             selected_tags : [],
-            difficulty_level: null,
+            focus_difficulty: null,
+            selected_difficulty: null
         }
 
         this.handleChangeName = this.handleChangeName.bind(this);
@@ -41,6 +42,8 @@ class CreatePlan extends React.Component{
         this.handleSelectTag = this.handleSelectTag.bind(this);
         this.handleDeleteTag = this.handleDeleteTag.bind(this);
         this.handleSelectDifficulty = this.handleSelectDifficulty.bind(this);
+        this.handleMouseOver = this.handleMouseOver.bind(this);
+        this.handleMouseLeave = this.handleMouseLeave.bind(this);
     }
     
     componentDidMount(){
@@ -173,8 +176,16 @@ class CreatePlan extends React.Component{
         })
     }
 
-    handleSelectDifficulty(){
-        //do nothing for now 
+    handleSelectDifficulty(text){
+        this.setState({selected_difficulty : text});
+    }
+
+    handleMouseOver(text){
+        this.setState({focus_difficulty : text});
+    }
+
+    handleMouseLeave(e){
+        this.setState({focus_difficulty : null});
     }
 
     render(){
@@ -263,18 +274,18 @@ class CreatePlan extends React.Component{
                     </div>
                     <div className='section-spacing col-sm-12 col-md-12 col-lg-12'>
                         <p>Choose the level of difficulty:</p>
-                        <div className ='d-flex'>
-                            <div className='pr-4' onClick = {this.handleSelectDifficulty}>
-                                <span><i className='far fa-grin-squint fa-2x'></i></span>
-                                <p className='text-center'>Easy</p>
+                        <div className ='d-flex col-sm-10 col-md-8 col-lg-8 justify-content-between'>
+                            <div className='col-sm-3 col-md-3 col-lg-3 text-center' onClick = {e=>this.handleSelectDifficulty('Easy')} onMouseOver = {e=>this.handleMouseOver('Easy')} onMouseLeave = {this.handleMouseLeave}>
+                                <span><i className= {this.state.selected_difficulty === "Easy" || this.state.focus_difficulty === "Easy"? 'fas fa-grin-squint fa-3x' : 'fas fa-grin-squint fa-2x'} style = {{color: 'yellow'}}></i></span>
+                                <p>Easy</p>
                             </div>
-                            <div className='pr-4' onClick = {this.handleSelectDifficulty}>
-                                <span><i className='far fa-smile fa-2x'></i></span>
-                                <p className='text-center'>OK</p>
+                            <div className='col-sm-3 col-md-3 col-lg-3 text-center' onClick = {e=>this.handleSelectDifficulty('OK')} onMouseOver = {e=>this.handleMouseOver('OK')} onMouseLeave = {this.handleMouseLeave}>
+                                <span><i className= {this.state.selected_difficulty === "OK" || this.state.focus_difficulty === "OK"? 'fas fa-smile fa-3x' : 'fas fa-smile fa-2x'} style = {{color: 'yellow'}}></i></span>
+                                <p>OK</p>
                             </div>
-                            <div className='pr-4' onClick = {this.handleSelectDifficulty}>
-                                <span><i className='far fa-grin-beam-sweat fa-2x'></i></span>
-                                <p className='text-center'>Hard</p>
+                            <div className='col-sm-3 col-md-3 col-lg-3 text-center' onClick = {e=>this.handleSelectDifficulty('Hard')} onMouseOver = {e=>this.handleMouseOver('Hard')} onMouseLeave = {this.handleMouseLeave}>
+                                <span><i className= {this.state.selected_difficulty === "Hard" || this.state.focus_difficulty === "Hard"? 'fas fa-grin-beam-sweat fa-3x' : 'fas fa-grin-beam-sweat fa-2x'} style = {{color: 'yellow'}}></i></span>
+                                <p>Hard</p>
                             </div>
                         </div>
                     </div>
