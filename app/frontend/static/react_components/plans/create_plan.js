@@ -211,74 +211,76 @@ class CreatePlan extends React.Component{
         }
 
         return (
-            <div className = "create-a-plan container-center">
-                <div className='d-flex justify-content-between'>
-                    <div className='col-sm-6 col-md-6 col-lg-6 float-left'>
-                        <span className='fas fa-stack fa-3x'>
-                            <i className="far fa-circle fa-stack-2x"></i>
-                            <i className={this.state.icon + " fa-stack-1x"}></i>
-                        </span>
+            <div className = "create-a-plan d-flex justify-content-around">
+                <div className = 'col-sm-11 col-md-10 col-lg-9'>
+                    <div className='d-flex justify-content-between'>
+                        <div className='col-sm-6 col-md-6 col-lg-6 float-left'>
+                            <span className='fas fa-stack fa-3x'>
+                                <i className="far fa-circle fa-stack-2x"></i>
+                                <i className={this.state.icon + " fa-stack-1x"}></i>
+                            </span>
+                            <div>
+                                <p className='ml-3 pt-1 pl-3 float-left'>{this.state.name}</p>
+                            </div>
+                        </div>
+                        <div className='col-sm-6 col-md-6 col-lg-6'>
+                            <p>Name your habit:</p>
+                            <input className= "habit-name" value={this.state.name} onChange={this.handleChangeName}></input>
+                        </div>
+                    </div>
+                    <div className="d-flex pt-4 justify-content-between">
+                        <div className="icon-selection col-sm-6 col-md-6 col-lg-6">
+                            <p> Pick an icon: </p>
+                            <FontIconPicker icons={AllIcons} value={this.state.icon} onChange={this.handleSelectIcon} theme={this.state.theme}></FontIconPicker>
+                        </div>
+                        <div className="icon-color-selection col-sm-6 col-md-6 col-lg-6">
+                            <p> Pick a color: </p>
+                            <div className="d-flex">
+                                <div>{color_palette}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="section-spacing col-sm-12 col-md-12 col-lg-12">
+                        <p>Add a tag:</p>
+                        <div className='d-flex'>
+                            <span><i className='fas fa-plus add-tag col-sm-1 col-md-2 col-lg-2 '></i></span>
+                            <div className='selected-tags d-flex flex-wrap pt-1 col-sm-11 col-md-10 col-lg-10 '>{tags}</div>
+                        </div>
+                    </div>
+                    <div className = "d-flex col-sm-12 col-md-9 col-lg-6 section-spacing">
+                        <p className = 'float-left' style={{width : '60%'}}>Choose a frequency:</p> 
+                        <div className = 'd-flex pt-1 float-right' style={{width : '40%'}}>
+                            <div className = {this.state.frequency_unit === 'weekly'? 'underline' : ''}  onClick={this.handleSelectFrequencyUnit}><a href="#weekly">weekly</a></div>
+                            <div className = {this.state.frequency_unit === 'monthly'? 'pl-2 underline' : 'pl-2'} onClick={this.handleSelectFrequencyUnit}><a href="#monthly">monthly</a></div>
+                        </div>
+                    </div>
+                    <div className = "d-flex col-sm-12 col-md-12 col-lg-12">{this.state.frequency_unit === "weekly"? weekly_icons : monthly}</div>
+                    <div className = 'section-spacing col-sm-12 col-md-12 col-lg-12'>
+                        <p>Enter duration: </p>
                         <div>
-                            <p className='ml-3 pt-1 pl-3 float-left'>{this.state.name}</p>
+                            <Duration value={this.state.duration} unit={this.state.duration_unit} onChangeDuration={this.handleChangeDuration} onSelectUnit={this.handleSelectDurationUnit}>Choose duration</Duration>
                         </div>
                     </div>
-                    <div className='col-sm-6 col-md-6 col-lg-6'>
-                        <p>Name your habit:</p>
-                        <input className= "habit-name" value={this.state.name} onChange={this.handleChangeName}></input>
-                    </div>
-                </div>
-                <div className="d-flex pt-4 justify-content-between">
-                    <div className="icon-selection col-sm-6 col-md-6 col-lg-6">
-                        <p> Pick an icon: </p>
-                        <FontIconPicker icons={AllIcons} value={this.state.icon} onChange={this.handleSelectIcon} theme={this.state.theme}></FontIconPicker>
-                    </div>
-                    <div className="icon-color-selection col-sm-6 col-md-6 col-lg-6">
-                        <p> Pick a color: </p>
-                        <div className="d-flex">
-                            <div>{color_palette}</div>
+                    <div className='section-spacing col-sm-12 col-md-12 col-lg-12'>
+                        <p>Choose the level of difficulty:</p>
+                        <div className ='d-flex'>
+                            <div className='pr-4' onClick = {this.handleSelectDifficulty}>
+                                <span><i className='far fa-grin-squint fa-2x'></i></span>
+                                <p className='text-center'>Easy</p>
+                            </div>
+                            <div className='pr-4' onClick = {this.handleSelectDifficulty}>
+                                <span><i className='far fa-smile fa-2x'></i></span>
+                                <p className='text-center'>OK</p>
+                            </div>
+                            <div className='pr-4' onClick = {this.handleSelectDifficulty}>
+                                <span><i className='far fa-grin-beam-sweat fa-2x'></i></span>
+                                <p className='text-center'>Hard</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="pt-4 col-sm-12 col-md-12 col-lg-12">
-                    <p>Add a tag:</p>
-                    <div className='d-flex'>
-                        <span><i className='fas fa-plus add-tag col-sm-1 col-md-2 col-lg-2 '></i></span>
-                        <div className='selected-tags d-flex flex-wrap pt-1 col-sm-11 col-md-10 col-lg-10 '>{tags}</div>
+                    <div className='pt-4 col-sm-12 col-md-12 col-lg-12'>
+                        <p>Write something down to motivate yourself</p>
                     </div>
-                </div>
-                <div className = "d-flex col-sm-12 col-md-9 col-lg-6 pt-4">
-                    <p className = 'float-left' style={{width : '60%'}}>Choose a frequency:</p> 
-                    <div className = 'd-flex pt-1 float-right' style={{width : '40%'}}>
-                        <div className = {this.state.frequency_unit === 'weekly'? 'underline' : ''}  onClick={this.handleSelectFrequencyUnit}><a href="#weekly">weekly</a></div>
-                        <div className = {this.state.frequency_unit === 'monthly'? 'pl-2 underline' : 'pl-2'} onClick={this.handleSelectFrequencyUnit}><a href="#monthly">monthly</a></div>
-                    </div>
-                </div>
-                <div className = "d-flex col-sm-12 col-md-12 col-lg-12">{this.state.frequency_unit === "weekly"? weekly_icons : monthly}</div>
-                <div className = 'pt-4 col-sm-12 col-md-12 col-lg-12'>
-                    <p>Enter duration: </p>
-                    <div>
-                        <Duration value={this.state.duration} unit={this.state.duration_unit} onChangeDuration={this.handleChangeDuration} onSelectUnit={this.handleSelectDurationUnit}>Choose duration</Duration>
-                    </div>
-                </div>
-                <div className='pt-4 col-sm-12 col-md-12 col-lg-12'>
-                    <p>Choose the level of difficulty:</p>
-                    <div className ='d-flex'>
-                        <div className='pr-4' onClick = {this.handleSelectDifficulty}>
-                            <span><i className='far fa-grin-squint fa-2x'></i></span>
-                            <p className='text-center'>Easy</p>
-                        </div>
-                        <div className='pr-4' onClick = {this.handleSelectDifficulty}>
-                            <span><i className='far fa-smile fa-2x'></i></span>
-                            <p className='text-center'>OK</p>
-                        </div>
-                        <div className='pr-4' onClick = {this.handleSelectDifficulty}>
-                            <span><i className='far fa-grin-beam-sweat fa-2x'></i></span>
-                            <p className='text-center'>Hard</p>
-                        </div>
-                    </div>
-                </div>
-                <div className='pt-4 col-sm-12 col-md-12 col-lg-12'>
-                    <p>Write something down to motivate yourself</p>
                 </div>
             </div>
             )
