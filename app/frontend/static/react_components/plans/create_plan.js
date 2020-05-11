@@ -29,7 +29,8 @@ class CreatePlan extends React.Component{
             duration : 'Click tab to switch unit to week',
             selected_tags : [],
             focus_difficulty: null,
-            selected_difficulty: null
+            selected_difficulty: null,
+            motivation: ''
         }
 
         this.handleChangeName = this.handleChangeName.bind(this);
@@ -44,6 +45,7 @@ class CreatePlan extends React.Component{
         this.handleSelectDifficulty = this.handleSelectDifficulty.bind(this);
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
+        this.getColor = this.getColor.bind(this);
     }
     
     componentDidMount(){
@@ -188,6 +190,15 @@ class CreatePlan extends React.Component{
         this.setState({focus_difficulty : null});
     }
 
+    //a method to return the color for the big icon 
+    getColor(){
+        for (const color of icon_colors){
+            if (color[0] === this.state.selected_icon_color){
+                return color[2].toString();
+            }
+        }
+    }
+
     render(){
         //render a list of colors 
         var color_palette = [];
@@ -226,7 +237,7 @@ class CreatePlan extends React.Component{
                 <div className = 'col-sm-11 col-md-10 col-lg-9'>
                     <div className='d-flex justify-content-between'>
                         <div className='col-sm-6 col-md-6 col-lg-6 float-left'>
-                            <span className='fas fa-stack fa-3x'>
+                            <span className='fas fa-stack fa-3x' style={{color : this.getColor()}}>
                                 <i className="far fa-circle fa-stack-2x"></i>
                                 <i className={this.state.icon + " fa-stack-1x"}></i>
                             </span>
@@ -291,7 +302,7 @@ class CreatePlan extends React.Component{
                     </div>
                     <div className='pt-4 col-sm-12 col-md-12 col-lg-12'>
                         <p>Write something down to motivate yourself:</p>
-
+                        <textarea value = {this.state.motivation} onChange = {e => this.state.inputMotivation(e)}></textarea>
                     </div>
                 </div>
             </div>
