@@ -9,7 +9,10 @@ class Signup extends React.Component{
     }
 
     render(){
-        return (<h1>Signup</h1>)
+        return (
+        <div className='container-center container-border'>
+            <h1>Signup</h1>
+        </div>)
     }
 }
 

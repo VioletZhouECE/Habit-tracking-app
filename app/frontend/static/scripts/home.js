@@ -5,9 +5,7 @@ import MainPage from "../react_components/main_page"
 
 ReactDOM.render(
     <BrowserRouter>
-        <div>
-            <Route path='/' component={MainPage}></Route>
-        </div>
+        <Route path='/' component={MainPage}></Route>
     </BrowserRouter>,
 document.getElementById("root"))
 
