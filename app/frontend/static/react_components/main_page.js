@@ -2,15 +2,20 @@ import React from "react";
 import CategorySection from "./today/category_section";
 import {Route, Switch} from "react-router-dom";
 import Sidebar from "./today/sidebar";
-import Plans from "./plans/plans"
-import SinglePlan from "./plans/plan_detail"
-import CreatePlan from "./plans/create_plan"
+import Plans from "./plans/plans";
+import SinglePlan from "./plans/plan_detail";
+import CreatePlan from "./plans/create_plan";
+import Login from "./auth/login";
+import Signup from "./auth/signup";
 
 class MainPage extends React.Component{
     constructor(props){
         super(props)
 
         this.state = {
+            isAuth: false,
+            userId: null,
+            jwtoken: null,
             collapse : false
         }
 
@@ -22,7 +27,12 @@ class MainPage extends React.Component{
     }
 
     render(){
-        return (
+        return !this.state.isAuth ? (
+            <Switch>
+                <Route path = "/signup" component={Signup}></Route>
+                <Route path = "/" component={Login}></Route>
+            </Switch>
+        ) : (
         <div class="wrapper d-flex">
             <div id = "success_message" className = "alert alert-success">
                 The entry has been successfully created !
