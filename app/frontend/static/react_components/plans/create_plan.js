@@ -234,7 +234,7 @@ class CreatePlan extends React.Component{
 
         return (
             <div className = "create-a-plan d-flex justify-content-around">
-                <div className = 'col-sm-11 col-md-10 col-lg-9'>
+                <div className = 'container-center container-border'>
                     <div className='d-flex justify-content-between'>
                         <div className='col-sm-6 col-md-6 col-lg-6 float-left'>
                             <span className='fas fa-stack fa-3x' style={{color : this.getColor()}}>
