@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {Link} from "react-router-dom";
 
 class Login extends React.Component{
     constructor(props){
@@ -16,16 +17,22 @@ class Login extends React.Component{
                         <h2>Login</h2>
                     </div>
                     <form>
-                        <div class="form-group py-4">
+                        <div className="form-group py-4">
                             <label for="username">Username:</label>
-                            <input id="username" type="username" class="form-control" placeholder="Enter username"></input>
+                            <input id="username" className="form-control" placeholder="Enter username"></input>
                         </div>
-                        <div class="form-group pb-5">
+                        <div class="form-group pb-4">
                             <label for="userpassword">Password:</label>
-                            <small id="userpassword" class="form-text text-muted">Password has to be 6-12 characters long.</small>
-                            <input type="password" class="form-control" placeholder="Password"></input>
+                            <input type="password" className="form-control" placeholder="Password"></input>
+                        </div>
+                        <div className="d-flex justify-content-center">
+                            <button type="submit" className="btn btn-primary">Log Me In!</button>
                         </div>
                     </form>
+                        <div className="d-flex justify-content-center pt-4">
+                            <p className="pr-2">Do not have an account?</p>
+                            <Link to="/signup">Sign up</Link>
+                        </div>
                 </div>
             </div>
         </div>
