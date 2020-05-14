@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {Link} from "react-router-dom";
 
 class Signup extends React.Component{
     constructor(props){
@@ -10,9 +9,27 @@ class Signup extends React.Component{
 
     render(){
         return (
-        <div className='container-center container-border'>
-            <h1>Signup</h1>
-        </div>)
+        <div className='login-background'>
+            <div className='login-container container-border pt-4'>
+                <div className='container-center'>
+                    <div className='text-center'>
+                        <h2>Signup</h2>
+                    </div>
+                    <form>
+                        <div class="form-group py-4">
+                            <label for="username">Username:</label>
+                            <input id="username" type="username" class="form-control" placeholder="Enter username"></input>
+                        </div>
+                        <div class="form-group pb-5">
+                            <label for="userpassword">Password:</label>
+                            <small id="userpassword" class="form-text text-muted">Password has to be 6-12 characters long.</small>
+                            <input type="password" class="form-control" placeholder="Password"></input>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        )
     }
 }
 
