@@ -36,20 +36,20 @@ class Login extends React.Component{
                     <form id="form-validation" onSubmit={e=>this.handleSubmit(e)} noValidate>
                         <div className="form-group py-4">
                             <label for="username">Username:</label>
-                            <input id="username" className="form-control" placeholder="Enter username" required minLength="2" maxLength="10"></input>
+                            <input id="username" className="form-control" placeholder="Enter username" required></input>
                             <div class="invalid-feedback">
-                                A valid username (2-10 characters long) is required
+                                A username is required
                             </div>
                         </div>
                         <div class="form-group pb-4">
                             <label for="userpassword">Password:</label>
-                            <input type="password" className="form-control" placeholder="Password" required minLength="6" maxLength="12"></input>
+                            <input type="password" className="form-control" placeholder="Password" required></input>
                             <div class="invalid-feedback">
-                                A valid password (6-12 characters long) is required
+                                A password is required
                             </div>
                         </div>
                         <div className="d-flex justify-content-center">
-                            <button type="submit" className="btn btn-primary">Log Me In!</button>
+                            <button type="submit" className="btn btn-primary">Log me in!</button>
                         </div>
                     </form>
                         <div className="d-flex justify-content-center pt-4">
