@@ -26,6 +26,10 @@ class MainPage extends React.Component{
         this.setState( prevState => ({collapse : prevState.collapse? false: true}))
     }
 
+    handleLogin(data){
+        
+    }
+
     render(){
         return !this.state.isAuth ? (
             <Switch>
