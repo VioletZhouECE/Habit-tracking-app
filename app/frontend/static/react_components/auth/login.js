@@ -5,24 +5,31 @@ import {Link} from "react-router-dom";
 class Login extends React.Component{
     constructor(props){
         super(props);
-        //hold validation states
+
+        this.state = {
+            username : "",
+            password : ""
+        }
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    //client side validation
+    //client side validation using bootstrap form validation
     handleSubmit(e){
+
+        e.preventDefault();
+        e.stopPropagation();
         
         // Fetch form to apply custom Bootstrap validation
         var form = $('#form-validation');
 
         if (form[0].checkValidity() === false) {
-            e.preventDefault()
-            e.stopPropagation()
+            form.addClass('was-validated');
+            return;
         }
 
-        //if validation fails, show error messages 
-        form.addClass('was-validated');
+        //pass data to parent handler method
+        this.props.handleSubmitForm(this.state);
     }
 
     render(){
@@ -36,14 +43,14 @@ class Login extends React.Component{
                     <form id="form-validation" onSubmit={e=>this.handleSubmit(e)} noValidate>
                         <div className="form-group py-4">
                             <label for="username">Username:</label>
-                            <input id="username" className="form-control" placeholder="Enter username" required></input>
+                            <input id="username" className="form-control" required></input>
                             <div class="invalid-feedback">
                                 A username is required
                             </div>
                         </div>
                         <div class="form-group pb-4">
                             <label for="userpassword">Password:</label>
-                            <input type="password" className="form-control" placeholder="Password" required></input>
+                            <input type="password" className="form-control" required></input>
                             <div class="invalid-feedback">
                                 A password is required
                             </div>
