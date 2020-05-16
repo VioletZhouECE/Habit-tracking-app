@@ -16,26 +16,70 @@ class MainPage extends React.Component{
             isAuth: false,
             userId: null,
             jwtoken: null,
-            collapse : false
+            collapse : false,
+            error: null
         }
 
         this.handleClick = this.handleClick.bind(this);
-        thhis.handleLogin = this.handleLogin.bind(this);
+        this.handleSignup = this.handleSignup.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
     }
 
     handleClick(){
         this.setState( prevState => ({collapse : prevState.collapse? false: true}))
     }
 
-    handleLogin(data){
-        
-    }
+    handleSignup(data){
+    fetch('/auth/signup', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: data.username,
+        password: data.password
+      })
+    })
+      .then(res => {
+        console.log(res);
+        if (res.status === 400) {
+            throw new Error('Please enter a valid username (2-10 characters long) and a valid password (6-12 characters long)');
+        }
+        if (res.status === 422) {
+          throw new Error("An user with this username already exists, please choose another username!");
+        }
+        if (res.status !== 200 && res.status !== 201) {
+            throw new Error ("Create user failed due to an issue on the server, please try again later");
+        }
+        return res.json();
+      })
+      .then(resData => {
+        //redirect user to the login page
+        console.log(resData);
+        this.setState({ isAuth: true});
+        this.props.history.replace('/');
+      })
+      .catch(err => {
+        //display error message
+        console.log(err);
+        this.setState({
+          isAuth: false,
+          error: err
+        });
+      });
+  };
+
+  handleLogin(){
+      //dummy method
+  }
 
     render(){
+        var handleLogin = this.handleLogin;
+        var handleSignup = this.handleSignup;
         return !this.state.isAuth ? (
             <Switch>
-                <Route path = "/signup" component ={Signup}></Route>
-                <Route path = "/" render = {(props) => <Login handleSubmitForm = {props.handleLogin}></Login>}></Route>
+                <Route path = "/signup" render = {(props) => <Signup handleSumbitForm = {handleSignup}></Signup>}></Route>
+                <Route path = "/" render = {(props) => <Login handleSumbitForm = {handleLogin}></Login>}></Route>
             </Switch>
         ) : (
         <div class="wrapper d-flex">
