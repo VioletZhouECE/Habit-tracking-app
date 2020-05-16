@@ -20,6 +20,7 @@ class MainPage extends React.Component{
         }
 
         this.handleClick = this.handleClick.bind(this);
+        thhis.handleLogin = this.handleLogin.bind(this);
     }
 
     handleClick(){
@@ -33,8 +34,8 @@ class MainPage extends React.Component{
     render(){
         return !this.state.isAuth ? (
             <Switch>
-                <Route path = "/signup" component={Signup}></Route>
-                <Route path = "/" component={Login}></Route>
+                <Route path = "/signup" component ={Signup}></Route>
+                <Route path = "/" render = {(props) => <Login handleSubmitForm = {props.handleLogin}></Login>}></Route>
             </Switch>
         ) : (
         <div class="wrapper d-flex">
