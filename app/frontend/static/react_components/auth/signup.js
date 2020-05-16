@@ -5,24 +5,39 @@ import {Link} from "react-router-dom";
 class Signup extends React.Component{
     constructor(props){
         super(props);
-        //hold validation states
 
+        this.state = {
+            username : "",
+            password : ""
+        }
+
+        this.handleChangeUsername = this.handleChangeUsername.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChangeUsername(e){
+        this.setState({username : e.target.value});
+    }
+
+    handleChangePassword(e){
+        this.setState({password : e.target.value});
     }
 
     //client side validation
     handleSubmit(e){
+        e.preventDefault();
+        e.stopPropagation();
         
         // Fetch form to apply custom Bootstrap validation
         var form = $('#form-validation');
 
         if (form[0].checkValidity() === false) {
-            e.preventDefault()
-            e.stopPropagation()
+            form.addClass('was-validated');
+            return;
         }
 
-        //if validation fails, show error messages 
-        form.addClass('was-validated');
+        this.props.handleSumbitForm(this.state);
     }
 
     render(){
@@ -36,14 +51,14 @@ class Signup extends React.Component{
                     <form id="form-validation" onSubmit={e=>this.handleSubmit(e)} noValidate>
                         <div className="form-group py-4">
                             <label for="username">Username:</label>
-                            <input id="username" className="form-control" placeholder="Enter username" required minLength="2" maxLength="10"></input>
+                            <input id="username" className="form-control" value={this.state.username} onChange={e=>this.handleChangeUsername(e)} required minLength="2" maxLength="10"></input>
                             <div class="invalid-feedback">
                                 A valid username (2-10 characters long) is required
                             </div>
                         </div>
                         <div class="form-group pb-4">
                             <label for="userpassword">Password:</label>
-                            <input type="password" className="form-control" placeholder="Password" required minLength="6" maxLength="12"></input>
+                            <input type="password" className="form-control" value={this.state.password} onChange={e=>this.handleChangePassword(e)} required minLength="6" maxLength="12"></input>
                             <div class="invalid-feedback">
                                 A valid password (6-12 characters long) is required
                             </div>

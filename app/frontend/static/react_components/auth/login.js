@@ -11,12 +11,21 @@ class Login extends React.Component{
             password : ""
         }
 
+        this.handleChangeUsername = this.handleChangeUsername.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChangeUsername(e){
+        this.setState({username : e.target.value});
+    }
+
+    handleChangePassword(e){
+        this.setState({password : e.target.value});
     }
 
     //client side validation using bootstrap form validation
     handleSubmit(e){
-
         e.preventDefault();
         e.stopPropagation();
         
@@ -27,9 +36,8 @@ class Login extends React.Component{
             form.addClass('was-validated');
             return;
         }
-
-        //pass data to parent handler method
-        this.props.handleSubmitForm(this.state);
+        
+        this.props.handleSumbitForm(this.state);
     }
 
     render(){
@@ -43,14 +51,14 @@ class Login extends React.Component{
                     <form id="form-validation" onSubmit={e=>this.handleSubmit(e)} noValidate>
                         <div className="form-group py-4">
                             <label for="username">Username:</label>
-                            <input id="username" className="form-control" required></input>
+                            <input id="username" className="form-control" value={this.state.username} onChange={e=>this.handleChangeUsername(e)} required></input>
                             <div class="invalid-feedback">
                                 A username is required
                             </div>
                         </div>
                         <div class="form-group pb-4">
                             <label for="userpassword">Password:</label>
-                            <input type="password" className="form-control" required></input>
+                            <input type="password" className="form-control" value={this.state.password} onChange={e=>this.handleChangePassword(e)} required></input>
                             <div class="invalid-feedback">
                                 A password is required
                             </div>
