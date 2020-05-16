@@ -53,8 +53,7 @@ class MainPage extends React.Component{
         return res.json();
       })
       .then(resData => {
-        //redirect user to the login page
-        console.log(resData);
+        //direct user to the home page
         this.setState({ isAuth: true});
         this.props.history.replace('/');
       })

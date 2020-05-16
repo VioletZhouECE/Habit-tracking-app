@@ -11,7 +11,6 @@ exports.signup = (req, res, next) => {
     models.user.findAll({where : {username:req.body.username}})
             .then(result => {
                 if (result.length !== 0){
-                    console.log(result)
                     let err = new Error('A user with that user name already exists');
                     err.statusCode = 422;
                     throw err;
@@ -27,7 +26,10 @@ exports.signup = (req, res, next) => {
             //send back response
             .then(user =>{
                 res.statusCode = 201;
-                res.send("User created successfully");
+                var response = {
+                    msg : 'User created successfully!'
+                }
+                res.send(response);
             })
             .catch(err =>{
                 if (!err.statusCode){
