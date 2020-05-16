@@ -30,16 +30,16 @@ class MainPage extends React.Component{
     }
 
     handleSignup(data){
-    fetch('/auth/signup', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: data.username,
-        password: data.password
+      fetch('/auth/signup', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: data.username,
+          password: data.password
+        })
       })
-    })
       .then(res => {
         if (res.status === 400) {
             throw new Error('Please enter a valid username (2-10 characters long) and a valid password (6-12 characters long)');
@@ -67,8 +67,41 @@ class MainPage extends React.Component{
       });
   };
 
-  handleLogin(){
-      //dummy method
+  handleLogin(data){
+    fetch('/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: data.username,
+        password: data.password
+      })
+    })
+    .then(res => {
+      if (res.status === 401) {
+          throw new Error('Wrong username or password');
+      }
+      if (res.status !== 200 && res.status !== 201) {
+          throw new Error ("Create user failed due to an issue on the server, please try again later");
+      }
+      return res.json();
+    })
+    .then(resData => {
+      console.log(resData);
+      //issue the auth token
+      //to-do
+      //direct user to the home page
+      this.setState({ isAuth: true});
+    })
+    .catch(err => {
+      //display error message
+      console.log(err);
+      this.setState({
+        isAuth: false,
+        error: err
+      });
+    });   
   }
 
     render(){

@@ -1,7 +1,33 @@
 const models = require('../models');
 
 exports.login = (req, res, next) => {
-    res.send("some dummy text");
+    //retrieve user from db 
+    models.user.findAll({where : {username:req.body.username,
+                                  password:req.body.password}})
+                .then(result => {
+                if (result.length === 0){
+                    let err = new Error('Wrong username or password');
+                    err.statusCode = 401;
+                    throw err;
+                } else {
+                        let login_user = result[0];
+                        res.statusCode = 200;
+                        let response = {
+                            msg : 'authentication succeeded!',
+                            userId: login_user.id.toString(),
+                            //jw token to be added 
+                        }
+                        res.json(response);
+                    }
+                })
+                .catch(err =>{
+                    if (!err.statusCode){
+                        err.statusCode = 500;
+                    }
+                    next(err);
+                    }
+                );
+
 }
 
 exports.signup = (req, res, next) => {
@@ -26,10 +52,10 @@ exports.signup = (req, res, next) => {
             //send back response
             .then(user =>{
                 res.statusCode = 201;
-                var response = {
+                let response = {
                     msg : 'User created successfully!'
                 }
-                res.send(response);
+                res.json(response);
             })
             .catch(err =>{
                 if (!err.statusCode){
