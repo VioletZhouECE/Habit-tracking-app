@@ -1,4 +1,6 @@
 const models = require('../models');
+const jwt = require('jsonwebtoken');
+const jwtkey = require('../config/jwtkey');
 
 exports.login = (req, res, next) => {
     //retrieve user from db 
@@ -11,11 +13,19 @@ exports.login = (req, res, next) => {
                     throw err;
                 } else {
                         let login_user = result[0];
+                        //generate json web token
+                        const token = jwt.sign(
+                            { username: login_user.username,
+                              userId: login_user.id.toString()
+                            },
+                            jwtkey,
+                            { expiresIn: '3h' }
+                          );
                         res.statusCode = 200;
                         let response = {
                             msg : 'authentication succeeded!',
                             userId: login_user.id.toString(),
-                            //jw token to be added 
+                            token: token
                         }
                         res.json(response);
                     }
@@ -52,8 +62,19 @@ exports.signup = (req, res, next) => {
             //send back response
             .then(user =>{
                 res.statusCode = 201;
+                //generate json web token
+                const token = jwt.sign(
+                    { username: user.username,
+                      userId: user.id.toString()
+                    },
+                    'FVFSRHGUH3QD',
+                    { expiresIn: '3h' }
+                  );
+
                 let response = {
-                    msg : 'User created successfully!'
+                    msg : 'User created successfully!',
+                    userId: user.id.toString(),
+                    token: token
                 }
                 res.json(response);
             })

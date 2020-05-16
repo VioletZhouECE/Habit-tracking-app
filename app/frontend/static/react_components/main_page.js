@@ -15,7 +15,7 @@ class MainPage extends React.Component{
         this.state = {
             isAuth: false,
             userId: null,
-            jwtoken: null,
+            token: null,
             collapse : false,
             error: null
         }
@@ -54,7 +54,9 @@ class MainPage extends React.Component{
       })
       .then(resData => {
         //direct user to the home page
-        this.setState({ isAuth: true});
+        this.setState({ isAuth: true,
+                        userId: resData.userId,
+                        token : resData.token});
         this.props.history.replace('/');
       })
       .catch(err => {
@@ -89,10 +91,10 @@ class MainPage extends React.Component{
     })
     .then(resData => {
       console.log(resData);
-      //issue the auth token
-      //to-do
       //direct user to the home page
-      this.setState({ isAuth: true});
+      this.setState({isAuth: true,
+                     userId: resData.userId,
+                     token : resData.token});
     })
     .catch(err => {
       //display error message
