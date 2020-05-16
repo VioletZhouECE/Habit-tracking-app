@@ -1,24 +1,23 @@
-const user_model = require('../models/user');
+const models = require('../models');
 
-exports.login = (req, res) => {
-    res.send("Hello");
-    //empty method
-};
+exports.login = (req, res, next) => {
+    res.send("some dummy text");
+}
 
-exports.signup = (req, res) => {
+exports.signup = (req, res, next) => {
    //retrieve validator result
    //skip for now
    //retrieve user from db
-    console.log(req.body);
-    user_model.find({username:req.body.username})
+    models.user.findAll({where : {username:req.body.username}})
             .then(result => {
-                if (result !== null){
-                    let err = new Error();
-                    err.status = 422;
+                if (result.length !== 0){
+                    console.log(result)
+                    let err = new Error('A user with that user name already exists');
+                    err.statusCode = 422;
                     throw err;
                 } else {
                     //create a new user in db
-                    return user_model.create({
+                    return models.user.create({
                         username: req.body.username,
                         //to-do: use bcrypt
                         password: req.body.password
@@ -27,12 +26,12 @@ exports.signup = (req, res) => {
             })
             //send back response
             .then(user =>{
-                res.status = 201;
+                res.statusCode = 201;
                 res.send("User created successfully");
             })
             .catch(err =>{
-                if (!err.status){
-                    err.status = 500;
+                if (!err.statusCode){
+                    err.statusCode = 500;
                 }
                 next(err);
                 }
