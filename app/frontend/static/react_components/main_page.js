@@ -41,7 +41,6 @@ class MainPage extends React.Component{
       })
     })
       .then(res => {
-        console.log(res);
         if (res.status === 400) {
             throw new Error('Please enter a valid username (2-10 characters long) and a valid password (6-12 characters long)');
         }

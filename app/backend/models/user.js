@@ -1,24 +1,39 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory');
-
-class User extends Model {}
-
-User.init({
+module.exports = function( sequelize, DataTypes ) {
+  var User = sequelize.define(
+   'user',
+   {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.fn('NOW'),
+      allowNull: false
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.fn('NOW'),
+      allowNull: false
+    },
     username: {
-        type: Sequelize.DataTypes.STRING,
+        type: DataTypes.STRING,
         unique : true,
         allowNull: false,
     }, 
     password: {
-      type: Sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     money: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: true
     }
-}, {
-  sequelize, 
-  modelName: 'User',
-  tableName: 'User'
-});
+  });
+
+  console.log(sequelize.models)
+
+  return User;
+};
