@@ -43,6 +43,9 @@ class sidebar extends React.Component{
                 <li id = "nav_community" className = "mt-2">
                     <a href = "#"><i className ="fas fa-comment"></i></a><a href = "#" className= "pl-3" style = {{display: this.props.collapse? "none" : "inline"}}>Community</a>
                 </li>
+                <li id = "nav_logout" className = "mt-2">
+                    <a href = "#" onClick={this.props.handleLogout}><i class="fas fa-sign-out-alt"></i></a><a href = "#" onClick={this.props.handleLogout} className= "pl-3" style = {{display: this.props.collapse? "none" : "inline"}}>Logout</a>
+                </li>
             </ul>
         </nav>
         )

@@ -23,6 +23,7 @@ class MainPage extends React.Component{
         this.handleClick = this.handleClick.bind(this);
         this.handleSignup = this.handleSignup.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
 
     componentDidMount(){
@@ -82,7 +83,6 @@ class MainPage extends React.Component{
         return res.json();
       })
       .then(resData => {
-        this.setJwt(resData.userId, resData.token);
         //direct user to the home page
         this.setState({ isAuth: false,
                         userId: resData.userId,
@@ -152,16 +152,19 @@ class MainPage extends React.Component{
 
   setAutoLogout(remainingMilliseconds){
     setTimeout(()=>{
-      //logout the user out
-      this.setState({
-        isAuth : false,
-        token: null
-      })
-      //remove items from the local storage
-      localStorage.removeItem('token');
-      localStorage.removeItem('userId');
-      localStorage.removeItem('expiryDate');
-    }, remainingMilliseconds);
+      handleLogout(), remainingMilliseconds});
+  }
+
+  handleLogout(){
+    //logout the user out
+    this.setState({
+      isAuth : false,
+      token: null
+    })
+    //remove items from the local storage
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('expiryDate');
   }
 
     render(){
@@ -182,7 +185,7 @@ class MainPage extends React.Component{
             <div className = "alert alert-success toast-message">
                 The entry has been successfully created !
             </div>
-            <Sidebar collapse={this.state.collapse}></Sidebar>
+            <Sidebar collapse={this.state.collapse} handleLogout={this.handleLogout}></Sidebar>
             <div className = "container-fluid">
                 <a href = "#" onClick={this.handleClick}><i id = "hamburger-menu" class="fas fa-bars fa-1x pt-2"></i></a>
                 <div id="main_container" class="mt-4">
