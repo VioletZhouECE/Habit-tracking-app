@@ -31,22 +31,18 @@ class MainPage extends React.Component{
       if (!localStorage.getItem('token')){
         return; 
       }
-
+      
       if (localStorage.getItem('expiryDate') && 
       new Date().getTime() - localStorage.getItem('expiryDate')>0){
-       console.log('I am executed');
        localStorage.removeItem('expiryDate');
        localStorage.removeItem('token');
        localStorage.removeItem('userId');
-
       } else {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId');
         const remainingMilliseconds = new Date(localStorage.getItem('expiryDate')) - new Date().getTime();
-        console.log(remainingMilliseconds);
         //set autologout
         this.setAutoLogout(remainingMilliseconds);
-
         //direct user to homepage
         this.setState({
           isAuth : true,
@@ -84,22 +80,11 @@ class MainPage extends React.Component{
         return res.json();
       })
       .then(resData => {
+        this.setJwt(resData.userId, resData.token);
         //direct user to the home page
         this.setState({ isAuth: true,
                         userId: resData.userId,
                         token : resData.token});
-        //store token to local storage
-        localStorage.setItem('token', resData.token.toString());
-        localStorage.setItem('userId', resData.userId.toString());
-        //auto-logout: 3min for testing
-        const remainingMilliseconds = 60 * 3 * 1000;
-        const expiryDate = new Date(
-          new Date().getTime() + remainingMilliseconds
-        );
-        //store expiryDate as a UTC timestamp
-        console.log(expiryDate.toISOString());
-        localStorage.setItem('expiryDate', expiryDate.toISOString());
-        this.setAutoLogout(remainingMilliseconds);
         this.props.history.replace('/');
       })
       .catch(err => {
@@ -133,7 +118,7 @@ class MainPage extends React.Component{
       return res.json();
     })
     .then(resData => {
-      console.log(resData);
+      this.setJwt(resData.userId, resData.token);
       //direct user to the home page
       this.setState({isAuth: true,
                      userId: resData.userId,
@@ -147,6 +132,20 @@ class MainPage extends React.Component{
         error: err
       });
     });   
+  }
+
+  setJwt(userId, token){
+    //store userId and token to local storage
+    localStorage.setItem('userId', userId.toString());
+    localStorage.setItem('token', token.toString());
+    //auto-logout: 3min for testing
+    const remainingMilliseconds = 60 * 3 * 1000;
+    const expiryDate = new Date(
+      new Date().getTime() + remainingMilliseconds
+    );
+    //store expiryDate as a UTC timestamp
+    localStorage.setItem('expiryDate', expiryDate.toISOString());
+    this.setAutoLogout(remainingMilliseconds);
   }
 
   setAutoLogout(remainingMilliseconds){
