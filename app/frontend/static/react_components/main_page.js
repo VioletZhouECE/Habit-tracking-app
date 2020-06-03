@@ -25,6 +25,37 @@ class MainPage extends React.Component{
         this.handleLogin = this.handleLogin.bind(this);
     }
 
+    componentDidMount(){
+
+      //if the token expires, remove items from local storage
+      if (!localStorage.getItem('token')){
+        return; 
+      }
+
+      if (localStorage.getItem('expiryDate') && 
+      new Date().getTime() - localStorage.getItem('expiryDate')>0){
+       console.log('I am executed');
+       localStorage.removeItem('expiryDate');
+       localStorage.removeItem('token');
+       localStorage.removeItem('userId');
+
+      } else {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
+        const remainingMilliseconds = new Date(localStorage.getItem('expiryDate')) - new Date().getTime();
+        console.log(remainingMilliseconds);
+        //set autologout
+        this.setAutoLogout(remainingMilliseconds);
+
+        //direct user to homepage
+        this.setState({
+          isAuth : true,
+          token: token,
+          userId : userId,
+        })
+      }
+    }
+
     handleClick(){
         this.setState( prevState => ({collapse : prevState.collapse? false: true}))
     }
@@ -57,6 +88,18 @@ class MainPage extends React.Component{
         this.setState({ isAuth: true,
                         userId: resData.userId,
                         token : resData.token});
+        //store token to local storage
+        localStorage.setItem('token', resData.token.toString());
+        localStorage.setItem('userId', resData.userId.toString());
+        //auto-logout: 3min for testing
+        const remainingMilliseconds = 60 * 3 * 1000;
+        const expiryDate = new Date(
+          new Date().getTime() + remainingMilliseconds
+        );
+        //store expiryDate as a UTC timestamp
+        console.log(expiryDate.toISOString());
+        localStorage.setItem('expiryDate', expiryDate.toISOString());
+        this.setAutoLogout(remainingMilliseconds);
         this.props.history.replace('/');
       })
       .catch(err => {
@@ -104,6 +147,20 @@ class MainPage extends React.Component{
         error: err
       });
     });   
+  }
+
+  setAutoLogout(remainingMilliseconds){
+    setTimeout(()=>{
+      //logout the user out
+      this.setState({
+        isAuth : false,
+        token: null
+      })
+      //remove items from the local storage
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('expiryDate');
+    }, remainingMilliseconds);
   }
 
     render(){
