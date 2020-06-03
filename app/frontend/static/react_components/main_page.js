@@ -57,6 +57,8 @@ class MainPage extends React.Component{
     }
 
     handleSignup(data){
+      //remove error from the previous signup request
+      this.setState({error:null});
       fetch('/auth/signup', {
         method: 'PUT',
         headers: {
@@ -82,22 +84,23 @@ class MainPage extends React.Component{
       .then(resData => {
         this.setJwt(resData.userId, resData.token);
         //direct user to the home page
-        this.setState({ isAuth: true,
+        this.setState({ isAuth: false,
                         userId: resData.userId,
-                        token : resData.token});
+                        token : resData.token,
+                        error: null});
         this.props.history.replace('/');
       })
       .catch(err => {
-        //display error message
-        console.log(err);
         this.setState({
           isAuth: false,
-          error: err
+          error: err.message
         });
       });
   };
 
   handleLogin(data){
+    //remove error from the previous signup request
+    this.setState({error:null});
     fetch('/auth/login', {
       method: 'POST',
       headers: {
@@ -122,14 +125,13 @@ class MainPage extends React.Component{
       //direct user to the home page
       this.setState({isAuth: true,
                      userId: resData.userId,
-                     token : resData.token});
+                     token : resData.token,
+                     error: null});
     })
     .catch(err => {
-      //display error message
-      console.log(err);
       this.setState({
         isAuth: false,
-        error: err
+        error: err.message
       });
     });   
   }
@@ -166,13 +168,18 @@ class MainPage extends React.Component{
         var handleLogin = this.handleLogin;
         var handleSignup = this.handleSignup;
         return !this.state.isAuth ? (
+          <div>
+            <div className = "alert alert-danger toast-message" style={{display: this.state.error? "inline" : "none"}}>
+                {this.state.error}
+            </div> 
             <Switch>
                 <Route path = "/signup" render = {(props) => <Signup handleSumbitForm = {handleSignup}></Signup>}></Route>
                 <Route path = "/" render = {(props) => <Login handleSumbitForm = {handleLogin}></Login>}></Route>
             </Switch>
+          </div>
         ) : (
         <div class="wrapper d-flex">
-            <div id = "success_message" className = "alert alert-success">
+            <div className = "alert alert-success toast-message">
                 The entry has been successfully created !
             </div>
             <Sidebar collapse={this.state.collapse}></Sidebar>
