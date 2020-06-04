@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import { withRouter } from 'react-router-dom'
 
 class sidebar extends React.Component{
     constructor(props){
@@ -32,13 +33,10 @@ class sidebar extends React.Component{
                     <Link to='/create_plan'><i className= {this.state.mouseOver? "fas fa-plus-circle fa-3x" : "fas fa-plus-circle fa-2x"} style = {{color : this.state.mouseOver? "tomato" : "orange"}} onMouseOver = {this.handleMouseOver} onMouseLeave = {this.handleMouseLeave}></i></Link>
                 </li>
                 <li id = "nav_plans" className = "mt-2">
-                    <Link to="/plans"><a href = "#"><i className="fas fa-tasks"></i></a> <a href = "#" className = "pl-3" style = {{display: this.props.collapse? "none" : "inline"}}>Plans</a></Link>
+                    <Link to="/plans"><a href = "#"><i className="fas fa-tasks"></i></a><a href = "#" className = "pl-3 pl-0 ml-0" style = {{display: this.props.collapse? "none" : "inline"}}>Plans</a></Link>
                 </li>
                 <li id = "nav_today" className = "mt-2">
-                    <a href = "#"><i class="fas fa-calendar-minus"></i></a><a href = "#" className = "pl-3" style = {{display: this.props.collapse? "none" : "inline"}}>Today</a>
-                </li>
-                <li id = "nav_me" className= "mt-2">
-                    <a href = "#"><i className="fas fa-user-circle"></i></a><a href = "#" className = "pl-3" style = {{display: this.props.collapse? "none" : "inline"}}>Me</a>
+                    <a href = "#" onClick={()=>{history.replace('/')}}><i class="fas fa-calendar-minus"></i></a><a href = "#" onClick={()=>{this.props.history.replace('/')}} className = "pl-3" style = {{display: this.props.collapse? "none" : "inline"}}>Today</a>
                 </li>
                 <li id = "nav_community" className = "mt-2">
                     <a href = "#"><i className ="fas fa-comment"></i></a><a href = "#" className= "pl-3" style = {{display: this.props.collapse? "none" : "inline"}}>Community</a>
@@ -51,4 +49,4 @@ class sidebar extends React.Component{
         )
     }
 }
-export default sidebar;
+export default withRouter(sidebar);

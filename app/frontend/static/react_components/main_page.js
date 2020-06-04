@@ -152,7 +152,7 @@ class MainPage extends React.Component{
 
   setAutoLogout(remainingMilliseconds){
     setTimeout(()=>{
-      handleLogout(), remainingMilliseconds});
+      this.handleLogout, remainingMilliseconds});
   }
 
   handleLogout(){
