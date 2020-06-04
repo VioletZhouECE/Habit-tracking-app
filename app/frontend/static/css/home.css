@@ -31,6 +31,15 @@ html, body, #root, div.login-background{
     box-shadow: 7px 7px 5px 0px rgba(61,92,138,1);
 }
 
+.container-inner {
+    width: 90%; 
+    margin: auto;
+}
+
+.container-outer {
+    width: 70%; 
+    margin: auto;
+}
 .section-spacing {
     padding-top: 35px;
 }
@@ -103,6 +112,10 @@ html, body, #root, div.login-background{
     .container-center{
       width: 80%;
       margin: auto;
+    }
+    .container-outer {
+    width: 90%; 
+    margin: auto;
     }
 
     .login-container {

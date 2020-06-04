@@ -233,8 +233,8 @@ class CreatePlan extends React.Component{
         }
 
         return (
-            <div className = "create-a-plan d-flex justify-content-around">
-                <div className = 'container-center container-border'>
+            <div className = "create-a-plan d-flex justify-content-around container-outer container-border">
+                <div className = 'container-inner'>
                     <div className='d-flex justify-content-between'>
                         <div className='col-sm-6 col-md-6 col-lg-6 float-left'>
                             <span className='fas fa-stack fa-3x' style={{color : this.getColor()}}>
@@ -246,45 +246,45 @@ class CreatePlan extends React.Component{
                             </div>
                         </div>
                         <div className='col-sm-6 col-md-6 col-lg-6'>
-                            <p>Name your habit:</p>
+                            <p>1. Name your habit:</p>
                             <input className= "habit-name" value={this.state.name} onChange={this.handleChangeName}></input>
                         </div>
                     </div>
                     <div className="d-flex pt-4 justify-content-between">
                         <div className="icon-selection col-sm-6 col-md-6 col-lg-6">
-                            <p> Pick an icon: </p>
+                            <p> 2. Pick an icon: </p>
                             <FontIconPicker icons={AllIcons} value={this.state.icon} onChange={this.handleSelectIcon} theme={this.state.theme}></FontIconPicker>
                         </div>
                         <div className="icon-color-selection col-sm-6 col-md-6 col-lg-6">
-                            <p> Pick a color: </p>
+                            <p> 3. Pick a color: </p>
                             <div className="d-flex">
                                 <div>{color_palette}</div>
                             </div>
                         </div>
                     </div>
                     <div className="section-spacing col-sm-12 col-md-12 col-lg-12">
-                        <p>Add a tag:</p>
+                        <p>4. Add a tag:</p>
                         <div className='d-flex'>
                             <span><i className='fas fa-plus add-tag col-sm-1 col-md-2 col-lg-2 '></i></span>
                             <div className='selected-tags d-flex flex-wrap pt-1 col-sm-11 col-md-10 col-lg-10 '>{tags}</div>
                         </div>
                     </div>
                     <div className = "d-flex col-sm-12 col-md-9 col-lg-6 section-spacing">
-                        <p className = 'float-left' style={{width : '60%'}}>Choose a frequency:</p> 
-                        <div className = 'd-flex pt-1 float-right' style={{width : '40%'}}>
-                            <div className = {this.state.frequency_unit === 'weekly'? 'underline' : ''}  onClick={this.handleSelectFrequencyUnit}><a href="#weekly">weekly</a></div>
+                        <p className = 'float-left' style={{width : '60%'}}>5. Choose a frequency:</p> 
+                        <div className = 'd-flex float-right' style={{width : '40%'}}>
+                            <div className = {this.state.frequency_unit === 'weekly'? 'pl-4 underline' : 'pl-4'}  onClick={this.handleSelectFrequencyUnit}><a href="#weekly">weekly</a></div>
                             <div className = {this.state.frequency_unit === 'monthly'? 'pl-2 underline' : 'pl-2'} onClick={this.handleSelectFrequencyUnit}><a href="#monthly">monthly</a></div>
                         </div>
                     </div>
                     <div className = "d-flex col-sm-12 col-md-12 col-lg-12">{this.state.frequency_unit === "weekly"? weekly_icons : monthly}</div>
                     <div className = 'section-spacing col-sm-12 col-md-12 col-lg-12'>
-                        <p>Enter duration: </p>
+                        <p>6. Enter duration: </p>
                         <div>
                             <Duration value={this.state.duration} unit={this.state.duration_unit} onChangeDuration={this.handleChangeDuration} onSelectUnit={this.handleSelectDurationUnit}>Choose duration</Duration>
                         </div>
                     </div>
                     <div className='section-spacing col-sm-12 col-md-12 col-lg-12'>
-                        <p>Choose the level of difficulty:</p>
+                        <p>7. Choose the level of difficulty:</p>
                         <div className ='d-flex'>
                             <div className='col-sm-4 col-md-3 col-lg-3 flex-row text-center' onClick = {e=>this.handleSelectDifficulty('Easy')} onMouseOver = {e=>this.handleMouseOver('Easy')} onMouseLeave = {this.handleMouseLeave}>
                                 <span><i className= {this.state.selected_difficulty === "Easy" || this.state.focus_difficulty === "Easy"? 'float-left fas fa-grin-squint fa-3x' : 'float-left fas fa-grin-squint fa-2x'} style = {{color: 'yellow'}}></i></span>
@@ -301,8 +301,13 @@ class CreatePlan extends React.Component{
                         </div>
                     </div>
                     <div className='pt-4 col-sm-12 col-md-12 col-lg-12'>
-                        <p>Write something down to motivate yourself:</p>
-                        <textarea value = {this.state.motivation} onChange = {e => this.state.inputMotivation(e)}></textarea>
+                        <p>8. Write something down to motivate yourself:</p>
+                        <textarea style={{width:"100%"}} value = {this.state.motivation} onChange = {e => this.state.inputMotivation(e)}></textarea>
+                    </div>
+                    <div className = "container pt-5">
+                        <div style = {{width :"150px", margin : "auto"}}>
+                            <button type= "button" className="btn-primary" style = {{width : "100%"}}>Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
